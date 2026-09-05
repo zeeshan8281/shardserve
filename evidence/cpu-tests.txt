@@ -10,6 +10,7 @@ test_invalid (test_core.Control) ... ok
 test_pressure_deadline_backpressure (test_core.Control) ... ok
 test_scheduling_terminal_paths_and_late_arrival (test_core.Control) ... ok
 test_commit_replay_corruption_and_identity (test_core.Recovery) ... ok
+test_required_arguments_fail_before_importing_spark (test_databricks.DatabricksCLI) ... ok
 test_graphs_and_fault_lifecycle (test_gpu.GPUAcceptance) ... skipped 'requires two CUDA GPUs and SHARDSERVE_MODEL pinned local checkpoint'
 test_two_rank_forward_matches_tp1_and_cached_mixed_batch (test_parallel.ParallelAlgebra) ... ok
 test_final_failure_partial_commit_then_resume (test_recovery.PartialCommit) ... ok
@@ -18,6 +19,6 @@ test_after_staging_corrupt_attempt_retry_and_final_failure (test_recovery.Recove
 test_resume_before_staging_and_after_commit_ack (test_recovery.Recoveries) ... ok
 
 ----------------------------------------------------------------------
-Ran 16 tests in 1.817s
+Ran 17 tests in 1.196s
 
 OK (skipped=1)
