@@ -1,0 +1,55 @@
+{
+  "command": [
+    "/Users/zeeshan/yukon/shardserve/shardserve/__main__.py",
+    "env",
+    "--output",
+    "evidence/environment.json"
+  ],
+  "cuda_available": false,
+  "cuda_count": 0,
+  "devices": [],
+  "git": {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 128,
+    "stderr": "fatal: not a git repository (or any of the parent directories): .git\n",
+    "stdout": ""
+  },
+  "inventory": {
+    "command": [
+      "nvidia-smi",
+      "-q"
+    ],
+    "unavailable": "[Errno 2] No such file or directory: 'nvidia-smi'"
+  },
+  "nccl": null,
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "python": "3.9.6 (default, Aug  8 2025, 19:06:38) \n[Clang 17.0.0 (clang-1700.3.19.1)]",
+  "runtime_identity": {
+    "CUDA_VISIBLE_DEVICES": null,
+    "DATABRICKS_RUNTIME_VERSION": null,
+    "NVIDIA_VISIBLE_DEVICES": null
+  },
+  "source_digest": "2aab51ff99063e18068623ac09a443f10f8d2798cbcb552bdb0a0ab3f8f06dda",
+  "timestamp": "2026-09-05T20:18:54.716146+00:00",
+  "topology": {
+    "command": [
+      "nvidia-smi",
+      "topo",
+      "-m"
+    ],
+    "unavailable": "[Errno 2] No such file or directory: 'nvidia-smi'"
+  },
+  "torch_cuda": null,
+  "versions": {
+    "huggingface-hub": "0.36.2",
+    "mlflow": null,
+    "safetensors": "0.7.0",
+    "torch": "2.8.0",
+    "transformers": "4.57.6",
+    "triton": null
+  }
+}
