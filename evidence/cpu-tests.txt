@@ -18,6 +18,6 @@ test_after_staging_corrupt_attempt_retry_and_final_failure (test_recovery.Recove
 test_resume_before_staging_and_after_commit_ack (test_recovery.Recoveries) ... ok
 
 ----------------------------------------------------------------------
-Ran 16 tests in 1.870s
+Ran 16 tests in 1.817s
 
 OK (skipped=1)
