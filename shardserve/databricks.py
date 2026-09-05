@@ -15,10 +15,14 @@ def main():
     p.add_argument('--results-table'); p.add_argument('--model'); p.add_argument('--hardware')
     p.add_argument('--config'); p.add_argument('--max-attempts',type=int,default=2)
     args=p.parse_args()
+    if args.operation=='prepare':
+        if args.version is None or not args.input_table or not args.hardware: p.error('prepare needs --input-table, --version and --hardware')
+    else:
+        if not args.results_table: p.error(f'{args.operation} needs --results-table')
+        if args.operation in ('run','resume') and not args.model: p.error(f'{args.operation} needs --model')
     from pyspark.sql import SparkSession
     spark=SparkSession.builder.getOrCreate()
     if args.operation=='prepare':
-        if args.version is None or not args.input_table or not args.hardware: p.error('prepare needs input-table, version and hardware JSON')
         frame=spark.read.option('versionAsOf',args.version).table(args.input_table)
         from pyspark.sql import functions as F
         if frame.groupBy('request_id').count().filter(F.col('count')>1).limit(1).count(): raise ValueError('duplicate input IDs')
