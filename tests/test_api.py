@@ -45,6 +45,21 @@ class LocalRetriever:
             'source_url':'https://example.test/scheduler.py#L1-L2','repository':'shardserve','revision':'abc','rank':1,'score':1.0}]}
 
 class API(unittest.TestCase):
+    def test_public_ui_keeps_api_authenticated(self):
+        server=[]; ready=threading.Event()
+        original=ThreadingHTTPServer.serve_forever
+        def start(s): server.append(s); ready.set(); original(s,poll_interval=.01)
+        with patch.dict('os.environ',{'SHARDSERVE_API_TOKEN':'secret'}), patch.object(ThreadingHTTPServer,'serve_forever',start):
+            thread=threading.Thread(target=serve,args=(LocalEngine(),'127.0.0.1',0),daemon=True); thread.start()
+            self.assertTrue(ready.wait(5)); url=f'http://127.0.0.1:{server[0].server_port}'
+            try:
+                page=urllib.request.urlopen(url+'/').read()
+                self.assertIn(b'ShardServe IR',page)
+                with self.assertRaises(urllib.error.HTTPError) as raised: urllib.request.urlopen(url+'/health')
+                self.assertEqual(raised.exception.code,401)
+            finally:
+                server[0].shutdown(); thread.join(5)
+
     def test_http_stream_and_validation(self):
         server=[]; ready=threading.Event()
         original=ThreadingHTTPServer.serve_forever

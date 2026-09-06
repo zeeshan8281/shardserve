@@ -7,6 +7,23 @@ from urllib.parse import unquote
 from .retrieval import RetrievalUnavailable, answer_response, prepare_answer
 
 MAX_BODY=65536
+UI='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>ShardServe IR</title><style>
+body{margin:0;background:#090b10;color:#eef2ff;font:16px system-ui,sans-serif}main{max-width:760px;margin:8vh auto;padding:24px}
+h1{font-size:clamp(2rem,7vw,4.5rem);margin:0}.sub{color:#9da8bd;margin:8px 0 36px}label{display:block;margin:18px 0 7px;color:#c9d2e3}
+input,textarea,button{box-sizing:border-box;width:100%;border:1px solid #31394a;border-radius:10px;background:#111620;color:#eef2ff;padding:13px;font:inherit}
+textarea{min-height:120px;resize:vertical}button{margin-top:18px;background:#5b7cfa;border:0;font-weight:700;cursor:pointer}button:disabled{opacity:.6}
+#status{color:#9da8bd;margin:18px 0}#answer{white-space:pre-wrap;line-height:1.6}.cite{display:block;color:#91a9ff;margin:8px 0;overflow-wrap:anywhere}
+</style><main><h1>ShardServe IR</h1><p class="sub">Elastic hybrid retrieval + a custom tensor-parallel Qwen engine on two L4 GPUs.</p>
+<form id="form"><label for="token">Access token</label><input id="token" type="password" autocomplete="off" required>
+<label for="question">Question</label><textarea id="question" required>Why does ShardServe reserve full KV capacity before admitting a request?</textarea>
+<button id="ask">Ask ShardServe</button></form><p id="status">The token stays in this page and is sent only to this service.</p><div id="answer"></div><div id="citations"></div></main>
+<script>
+const form=document.querySelector('#form'),button=document.querySelector('#ask'),status=document.querySelector('#status'),answer=document.querySelector('#answer'),citations=document.querySelector('#citations');
+form.addEventListener('submit',async event=>{event.preventDefault();button.disabled=true;answer.textContent='';citations.replaceChildren();status.textContent='Retrieving sources and running TP2 inference...';
+try{const response=await fetch('/answer',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+document.querySelector('#token').value},body:JSON.stringify({request_id:'web-'+crypto.randomUUID(),question:document.querySelector('#question').value,repository:'shardserve',top_k:6,max_new_tokens:160,include_debug:true})});const data=await response.json();if(!response.ok)throw new Error(data.error||('HTTP '+response.status));answer.textContent=data.answer;for(const item of data.citations||[]){const link=document.createElement('a');link.className='cite';link.textContent=item.doc_id;link.href=item.source_url;link.target='_blank';link.rel='noreferrer';citations.append(link)}status.textContent=`${data.terminal_status} · ${data.usage.input_tokens} input tokens · ${data.usage.output_tokens} output tokens`;}
+catch(error){status.textContent=error.message==='unauthorized'?'Wrong or expired access token.':error.message}finally{button.disabled=false}});
+</script></html>'''.encode()
 
 
 def serve(engine, host='127.0.0.1', port=8080, retriever=None):
@@ -24,6 +41,10 @@ def serve(engine, host='127.0.0.1', port=8080, retriever=None):
             self.send_response(status); self.send_header('Content-Type','application/json')
             self.send_header('Content-Length',str(len(data))); self.end_headers(); self.wfile.write(data)
         def do_GET(self):
+            if self.path=='/':
+                self.send_response(200); self.send_header('Content-Type','text/html; charset=utf-8')
+                self.send_header('Content-Security-Policy',"default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+                self.send_header('Content-Length',str(len(UI))); self.end_headers(); self.wfile.write(UI); return
             if not self.authorized(): return self.send_json(401,{'error':'unauthorized'})
             if self.path not in ('/health','/metrics'): return self.send_json(404,{'error':'not_found'})
             health=engine.health(); health['retrieval_configured']=retriever is not None
