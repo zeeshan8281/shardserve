@@ -1,0 +1,25 @@
+{
+  "citation_ids": [
+    "docs/project-direction.md:L1-L120"
+  ],
+  "deployment_revision": "24b5d1b",
+  "endpoint": "https://zeeshan8281--shardserve-ir-api.modal.run",
+  "engine": {
+    "gpu": "NVIDIA L4",
+    "gpu_count": 2,
+    "model_revision": "14d7620ba47cf51be0b176e14e27e38a34d4ff88",
+    "prefix_cache_enabled": false,
+    "tensor_parallel_size": 2,
+    "ttft_ms": 3503.3
+  },
+  "http_status": 200,
+  "index": "shardserve-docs-vc51baa09821a",
+  "retrieval_mode": "hybrid",
+  "terminal_reason": "length",
+  "terminal_status": "completed",
+  "unauthenticated_health_status": 401,
+  "usage": {
+    "input_tokens": 1254,
+    "output_tokens": 96
+  }
+}

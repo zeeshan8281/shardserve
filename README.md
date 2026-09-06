@@ -156,6 +156,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=2 \
 | Graphs and injected rank failures | Passed on two NVIDIA L4 GPUs | [`evidence/gpu/gpu-graphs.json`](evidence/gpu/gpu-graphs.json), [`evidence/gpu/gpu-faults.json`](evidence/gpu/gpu-faults.json) |
 | Databricks/Modal data plane | 4 inputs, 4 distinct completed results; 0.2.0 deployment preflight passed | [`evidence/databricks/data-plane-finalize.json`](evidence/databricks/data-plane-finalize.json), [`evidence/databricks/deployment-preflight.json`](evidence/databricks/deployment-preflight.json) |
 | Elastic publication and hybrid retrieval | 389 verified chunks; live RRF query passed | [`evidence/elastic/index-publication.json`](evidence/elastic/index-publication.json), [`evidence/elastic/retrieval-smoke.json`](evidence/elastic/retrieval-smoke.json) |
+| Retrieval-aware TP2 service | Live authenticated `/answer` completed on two L4s with a source citation | [`evidence/modal/ir-service-acceptance.json`](evidence/modal/ir-service-acceptance.json) |
 | MLflow upload | Passed | [`evidence/databricks/data-plane-tracking.json`](evidence/databricks/data-plane-tracking.json) |
 
 The connected Databricks Free Edition workspace cannot create classic compute, and its serverless A10 request exhausted the available GPU quota. Modal therefore supplies the GPUs while Databricks remains the data plane. See [`docs/implementation.md`](docs/implementation.md) for design decisions, provenance, and remaining acceptance work.
