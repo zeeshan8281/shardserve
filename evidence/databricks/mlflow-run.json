@@ -1,0 +1,103 @@
+{
+  "run": {
+    "info": {
+      "artifact_uri": "dbfs:/databricks/mlflow-tracking/540229102742143/2dc0319ddf724ad3af6be3188f99a89d/artifacts",
+      "end_time": 1788676966439,
+      "experiment_id": "540229102742143",
+      "lifecycle_stage": "active",
+      "run_id": "2dc0319ddf724ad3af6be3188f99a89d",
+      "run_name": "chill-swan-57",
+      "run_uuid": "2dc0319ddf724ad3af6be3188f99a89d",
+      "start_time": 1788676965312,
+      "status": "FINISHED"
+    },
+    "data": {
+      "tags": [
+        {
+          "key": "mlflow.databricks.cluster.id",
+          "value": "0906-064141-df21wlto-v2n"
+        },
+        {
+          "key": "mlflow.databricks.cluster.info",
+          "value": "{\"cluster_name\":\"\",\"spark_version\":\"client.2.5-aarch64-scala2.12\",\"autotermination_minutes\":120}"
+        },
+        {
+          "key": "mlflow.databricks.cluster.libraries",
+          "value": "{\"installable\":[],\"redacted\":[]}"
+        },
+        {
+          "key": "mlflow.databricks.jobID",
+          "value": "991453710066203"
+        },
+        {
+          "key": "mlflow.databricks.jobRunID",
+          "value": "930094317927292"
+        },
+        {
+          "key": "mlflow.databricks.jobType",
+          "value": "notebook"
+        },
+        {
+          "key": "mlflow.databricks.notebook.commandID",
+          "value": "1788676905109_4861165883094177902_job-991453710066203-run-930094317927292-action-4692126097080560"
+        },
+        {
+          "key": "mlflow.databricks.notebookID",
+          "value": "540229102742141"
+        },
+        {
+          "key": "mlflow.databricks.notebookPath",
+          "value": "/Shared/shardserve-validation/delta-mlflow"
+        },
+        {
+          "key": "mlflow.databricks.notebookRevisionID",
+          "value": "1788676966615"
+        },
+        {
+          "key": "mlflow.databricks.webappURL",
+          "value": "https://dbc-560055d8-a345.cloud.databricks.com"
+        },
+        {
+          "key": "mlflow.databricks.workspaceID",
+          "value": "7474646420716949"
+        },
+        {
+          "key": "mlflow.databricks.workspaceURL",
+          "value": "https://dbc-560055d8-a345.cloud.databricks.com"
+        },
+        {
+          "key": "mlflow.runColor",
+          "value": "#5387dd"
+        },
+        {
+          "key": "mlflow.runName",
+          "value": "chill-swan-57"
+        },
+        {
+          "key": "mlflow.source.name",
+          "value": "jobs/991453710066203/run/930094317927292"
+        },
+        {
+          "key": "mlflow.source.type",
+          "value": "JOB"
+        },
+        {
+          "key": "mlflow.user",
+          "value": "zeeshan8281@gmail.com"
+        },
+        {
+          "key": "shardserve.run_id",
+          "value": "79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a"
+        },
+        {
+          "key": "shardserve.source_digest",
+          "value": "a5e6a9bcc1b415ba1a89259c2ad0243c92fbcd0b134d30393250f0e526854eb4"
+        },
+        {
+          "key": "mlflow.artifacts.spn",
+          "value": "/WorkspaceInternal/Mlflow/Artifacts/540229102742143/Runs/2dc0319ddf724ad3af6be3188f99a89d/"
+        }
+      ]
+    }
+  }
+}

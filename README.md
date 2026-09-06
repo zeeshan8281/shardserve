@@ -2,7 +2,7 @@
 
 Custom Qwen tensor-parallel inference with coordinated continuous batching, paged KV storage, and a bounded Databricks batch adapter.
 
-**Status: GPU core verified; Databricks and performance acceptance remain.** CPU checks pass locally. Full-model BF16 TP1/TP2 correctness, NCCL, the Triton paged-attention kernel, CUDA Graphs, cancellation, and injected rank failures passed on two Modal NVIDIA L4 GPUs. Databricks execution and matched performance gates remain unverified. See [phase evidence and limitations](docs/implementation.md).
+**Status: GPU core and Databricks Delta/MLflow integration verified; classic Databricks GPU and performance acceptance remain.** CPU checks pass locally. Full-model BF16 TP1/TP2 correctness, NCCL, the Triton paged-attention kernel, CUDA Graphs, cancellation, and injected rank failures passed on two Modal NVIDIA L4 GPUs. Delta recovery, corruption rejection, duplicate replay, Unity Catalog volume persistence, and MLflow upload passed in Databricks serverless. See [phase evidence and limitations](docs/implementation.md).
 
 The runtime owns weight partitioning, forward execution, allocation, iteration plans and sampling. It does not call Hugging Face `generate()`, vLLM or a managed model endpoint. Hugging Face supplies tokenization/download tooling and verification-only reference forward execution. MIT RoPE/RMSNorm math and the paged Triton kernel are adapted from [cloud-inference-from-scratch at 1747158](https://github.com/zeeshan8281/cloud-inference-from-scratch/tree/174715839aa256a2010b21a796da716cae1a46f4); see `LICENSE`.
 
@@ -98,4 +98,4 @@ python -m shardserve upload artifacts/runs/RUN_ID --experiment /Shared/ShardServ
 
 `RUN_ID` is printed by preparation. Resume reuses its persisted manifest and rejects changed code. Successful staging is validated before insert-only commit. Attempts remain observable; final failures are committed by the coordinator and skipped on resume. SQLite checks do not satisfy the Databricks gate.
 
-The actual classic GPU job, Delta snapshot preparation, single-committer constraints, recovery and MLflow commands are documented in [Databricks execution](docs/databricks.md). Workspace access and an authorized node/duration/spending envelope are still required. No native managed serving endpoint exists, and managed TP custom-server compatibility is not claimed.
+The classic GPU job protocol and the executed serverless Delta/MLflow evidence are documented in [Databricks execution](docs/databricks.md). The connected Free Edition workspace cannot create classic compute, and its serverless A10 request reported exhausted GPU quota. No native managed serving endpoint exists, and managed TP custom-server compatibility is not claimed.

@@ -1,0 +1,25 @@
+{
+  "corrupt_incidents": [
+    "bfbd85c6e50f1c3f628ec62406cbc21182f444459c84bdd03ea2a430ea297c54.json"
+  ],
+  "directory": "/Volumes/workspace/shardserve/artifacts/runs/79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a",
+  "first_rows_considered": 1,
+  "input_table": "workspace.shardserve.inputs",
+  "input_version": 3,
+  "mlflow": {
+    "mlflow_run_id": "2dc0319ddf724ad3af6be3188f99a89d",
+    "status": "uploaded"
+  },
+  "replayed_rows_considered": 1,
+  "results_table": "workspace.shardserve.results",
+  "run_id": "79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a",
+  "scope": "serverless-delta-mlflow",
+  "status": "passed",
+  "validated": {
+    "complete": true,
+    "failed": 0,
+    "run_id": "79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a",
+    "successful": 1,
+    "unique_terminal_results": 1
+  }
+}

@@ -1,9 +1,12 @@
 import io
+from pathlib import Path
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
 from shardserve.databricks import main
+from shardserve import evidence
 
 
 class DatabricksCLI(unittest.TestCase):
@@ -19,3 +22,14 @@ class DatabricksCLI(unittest.TestCase):
                 with self.assertRaises(SystemExit) as raised:
                     main()
                 self.assertEqual(raised.exception.code, 2)
+
+    def test_source_digest_works_from_installed_package(self):
+        with tempfile.TemporaryDirectory() as directory:
+            package = Path(directory) / 'shardserve'
+            package.mkdir()
+            module = package / 'module.py'
+            module.write_text('value = 1\n')
+            with patch.object(evidence, '__file__', str(package / 'evidence.py')):
+                first = evidence.source()
+                module.write_text('value = 2\n')
+                self.assertNotEqual(first, evidence.source())

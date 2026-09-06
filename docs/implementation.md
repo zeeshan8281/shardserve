@@ -1,6 +1,6 @@
 # Implementation and evidence plan
 
-The PRD remains the release contract. The GPU core has hardware evidence; Databricks and performance acceptance are incomplete.
+The PRD remains the release contract. The GPU core and Databricks serverless Delta/MLflow path have hardware evidence; classic Databricks GPU and performance acceptance are incomplete.
 
 ## P0 audit
 
@@ -28,11 +28,11 @@ Selected model: `Qwen/Qwen2.5-3B-Instruct` revision `14d7620ba47cf51be0b176e14e2
 | P2 | Paged pool, distributed plan path, mixed/chunked regressions, real Triton/NCCL concurrent workload and per-rank state/memory | Complete on tested L4 hardware |
 | P3 | Cancellation/deadline/backpressure supervisor plus before/after-all-reduce and external-kill evidence | Complete on tested L4 hardware |
 | P4 | Graph/eager equality, 1/2/4/8 transitions, cancellation, 29 graph replays | Preserve both-rank profiler traces in a performance run |
-| P5 | Versioned Delta preparation, attempt sealing, insert-only single-writer commit, local recovery checks | Actual classic GPU job, durable Delta recovery, platform filesystem and MLflow upload verification |
+| P5 | Versioned Delta preparation, attempt sealing, insert-only single-writer commit, Databricks serverless Delta recovery, Unity Catalog volume persistence, corruption rejection and MLflow upload | Actual classic GPU job on a workspace that permits classic compute |
 | P6 | Deterministic workload and bounded HTTP comparison driver | All five matched comparisons, at least three repeats, raw GPU records, profiler traces, actual cost |
 
-GPU evidence was collected on 2026-09-06 using two co-located Modal NVIDIA L4 GPUs with 23,034 MiB each. Raw calibration and verified reports, hardware identities, graph results and fault timings are committed under `evidence/gpu`. Model weights lived only on ephemeral Modal storage and were not copied into this repository. Databricks and P6 remain blocked on workspace access and a separate bounded performance allocation.
+GPU evidence was collected on 2026-09-06 using two co-located Modal NVIDIA L4 GPUs with 23,034 MiB each. Raw calibration and verified reports, hardware identities, graph results and fault timings are committed under `evidence/gpu`. Model weights lived only on ephemeral Modal storage and were not copied into this repository. Databricks serverless run `418965407352167` verified the Delta and MLflow path; evidence is under `evidence/databricks`. The connected Free Edition workspace cannot create classic compute, and serverless GPU run `584842402884687` reported exhausted A10 quota. P6 still needs a separate bounded performance allocation.
 
 ## Known verification gaps
 
-The seven-prompt full-model corpus passed exact greedy equality on the tested L4s; its numerical envelope is hardware-specific. Both-rank profiler traces, the full matched benchmark matrix, actual billed cost, live vLLM adapter behavior, Databricks Delta recovery, platform filesystem semantics and MLflow upload remain unverified. There is no native managed serving deployment or managed TP-server support claim.
+The seven-prompt full-model corpus passed exact greedy equality on the tested L4s; its numerical envelope is hardware-specific. Both-rank profiler traces, the full matched benchmark matrix, actual billed cost, live vLLM adapter behavior and classic Databricks GPU execution remain unverified. There is no native managed serving deployment or managed TP-server support claim.

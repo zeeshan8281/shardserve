@@ -1,0 +1,20 @@
+[
+  {
+    "file_size": 74,
+    "is_dir": false,
+    "path": "input-000000.json"
+  },
+  {
+    "file_size": 1119,
+    "is_dir": false,
+    "path": "run.json"
+  },
+  {
+    "is_dir": true,
+    "path": "staging"
+  },
+  {
+    "is_dir": true,
+    "path": "validation-errors"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "run_id": 418965407352167,
+  "run_name": "shardserve-databricks-delta-mlflow",
+  "start_time": 1788676900355,
+  "end_time": 1788676971538,
+  "setup_duration": 4000,
+  "execution_duration": 66000,
+  "state": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "run_page_url": "https://dbc-560055d8-a345.cloud.databricks.com/?o=7474646420716949#job/991453710066203/run/418965407352167",
+  "tasks": [
+    {
+      "run_id": 930094317927292,
+      "task_key": "delta_mlflow",
+      "start_time": 1788676900383,
+      "end_time": 1788676971119,
+      "setup_duration": 4000,
+      "execution_duration": 66000,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "run_page_url": "https://dbc-560055d8-a345.cloud.databricks.com/?o=7474646420716949#job/991453710066203/run/930094317927292"
+    }
+  ]
+}

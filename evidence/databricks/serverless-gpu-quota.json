@@ -1,0 +1,27 @@
+{
+  "run_id": 584842402884687,
+  "run_name": "shardserve-databricks-serverless-gpu-acceptance",
+  "start_time": 1788676361375,
+  "end_time": 1788676857035,
+  "state": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "CANCELED",
+    "state_message": "Run cancelled by user",
+    "user_cancelled_or_timedout": true
+  },
+  "run_page_url": "https://dbc-560055d8-a345.cloud.databricks.com/?o=7474646420716949#job/684878601566338/run/584842402884687",
+  "tasks": [
+    {
+      "run_id": 666152258887187,
+      "task_key": "acceptance",
+      "start_time": 1788676361406,
+      "end_time": 1788676856707,
+      "state": {
+        "life_cycle_state": "INTERNAL_ERROR",
+        "result_state": "CANCELED",
+        "state_message": "RESOURCE_EXHAUSTED: GPU quota exhausted for GPU_1xA10: workspace GPU quota exhausted",
+        "user_cancelled_or_timedout": true
+      }
+    }
+  ]
+}

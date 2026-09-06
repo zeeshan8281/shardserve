@@ -10,9 +10,9 @@ from .batch import digest
 
 
 def source():
-    root=Path(__file__).resolve().parent.parent
-    paths=list((root/'shardserve').glob('*.py'))+list((root/'tests').glob('*.py'))+[root/'pyproject.toml']
-    return digest({str(p.relative_to(root)):digest_file(p) for p in sorted(paths)})
+    package=Path(__file__).resolve().parent
+    paths=sorted(package.rglob('*.py'))
+    return digest({str(p.relative_to(package.parent)):digest_file(p) for p in paths})
 
 
 def command(args):

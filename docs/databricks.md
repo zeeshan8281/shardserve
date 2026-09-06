@@ -1,6 +1,6 @@
 # Classic Databricks GPU job protocol
 
-Status: adapter implemented; **not executed on Databricks**. No workspace, region, compute shape or spending authorization has been supplied. Nothing in this repository provisions a cluster.
+Status: the Delta/MLflow adapter executed successfully on Databricks serverless on 2026-09-06. Run `418965407352167` verified an immutable Delta snapshot, Unity Catalog volume persistence, insert-only duplicate replay, corrupt-stage rejection, one authoritative terminal row, and MLflow run `2dc0319ddf724ad3af6be3188f99a89d`. This is a Free Edition workspace: classic allocation was rejected with `Only serverless compute is supported in the workspace`, and serverless GPU run `584842402884687` reported `RESOURCE_EXHAUSTED: GPU quota exhausted for GPU_1xA10`. The classic GPU protocol below remains unexecuted.
 
 Use one authorized classic single-node GPU job, one rank group and one committer. The current Databricks GPU guide supports single-node GPU compute, but that is not validation of this Torch/Triton/NCCL stack. GPU scheduling of Spark tasks is not TP. Do not use the AI Runtime adapter or managed serving instructions as substitutes.
 
@@ -41,7 +41,10 @@ The local SQLite sink exercises insert-only recovery semantics but is not eviden
 
 MLflow upload is separate and retryable: run identity and durable results do not depend on tracking success. `tracking-upload.json` records upload status or error and the retry command. Do not publish successful MLflow logging until the command succeeds on the actual workspace.
 
+The executed serverless evidence is under `evidence/databricks`. It independently queries `workspace.shardserve.results` through the serverless SQL warehouse and confirms one row and one distinct request for run `79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a`; it also preserves the serverless GPU quota error. This validates Delta, durable files and MLflow, but does not substitute for the classic GPU task above.
+
 Sources checked 2026-09-06:
 - https://docs.databricks.com/aws/en/compute/gpu
+- https://docs.databricks.com/aws/en/getting-started/free-edition-limitations
 - https://docs.databricks.com/aws/en/structured-streaming/delta-lake
 - https://mlflow.org/docs/latest/ml/tracking/tracking-api/

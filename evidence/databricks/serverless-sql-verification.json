@@ -1,0 +1,54 @@
+{
+  "statement_id": "01f1a9be-6c6b-1965-a330-0145c40d45c1",
+  "status": {
+    "state": "SUCCEEDED"
+  },
+  "manifest": {
+    "chunks": [
+      {
+        "chunk_index": 0,
+        "row_count": 1,
+        "row_offset": 0
+      }
+    ],
+    "format": "JSON_ARRAY",
+    "schema": {
+      "column_count": 3,
+      "columns": [
+        {
+          "name": "run_id",
+          "position": 0,
+          "type_name": "STRING",
+          "type_text": "STRING"
+        },
+        {
+          "name": "rows",
+          "position": 1,
+          "type_name": "LONG",
+          "type_text": "BIGINT"
+        },
+        {
+          "name": "unique_requests",
+          "position": 2,
+          "type_name": "LONG",
+          "type_text": "BIGINT"
+        }
+      ]
+    },
+    "total_chunk_count": 1,
+    "total_row_count": 1,
+    "truncated": false
+  },
+  "result": {
+    "chunk_index": 0,
+    "data_array": [
+      [
+        "79fece2b99c9f2fc89393a8b8537f856b7428ee335858fbb8abfbd965998b80a",
+        "1",
+        "1"
+      ]
+    ],
+    "row_count": 1,
+    "row_offset": 0
+  }
+}
