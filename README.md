@@ -7,6 +7,8 @@ Custom tensor-parallel inference for `Qwen/Qwen2.5-3B-Instruct`, with continuous
 
 The hosted path uses Databricks for durable inputs, Delta results, Unity Catalog artifacts, and MLflow tracking. Modal runs the custom inference engine on two NVIDIA L4 GPUs. The relay only handles small temporary JSON shards, so model weights never need to live on the local machine.
 
+The proposed next research milestone is [retrieval-aware tensor-parallel inference with Databricks and Elastic](docs/project-direction.md). It is documented as a proposal until its correctness and performance gates have measured evidence.
+
 ## What works
 
 - Custom Qwen forward pass with TP1 and TP2; no Hugging Face `generate()`, vLLM, or managed model endpoint.
