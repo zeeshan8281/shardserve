@@ -154,7 +154,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=2 \
 | CPU and control paths | Passing in GitHub Actions | [`evidence/cpu-tests.txt`](evidence/cpu-tests.txt) |
 | TP1/TP2 full-model correctness | Passed on two NVIDIA L4 GPUs | [`evidence/gpu`](evidence/gpu) |
 | Graphs and injected rank failures | Passed on two NVIDIA L4 GPUs | [`evidence/gpu/gpu-graphs.json`](evidence/gpu/gpu-graphs.json), [`evidence/gpu/gpu-faults.json`](evidence/gpu/gpu-faults.json) |
-| Databricks/Modal data plane | 4 inputs, 4 distinct completed results | [`evidence/databricks/data-plane-finalize.json`](evidence/databricks/data-plane-finalize.json), [`evidence/databricks/data-plane-sql-verification.json`](evidence/databricks/data-plane-sql-verification.json) |
+| Databricks/Modal data plane | 4 inputs, 4 distinct completed results; 0.2.0 deployment preflight passed | [`evidence/databricks/data-plane-finalize.json`](evidence/databricks/data-plane-finalize.json), [`evidence/databricks/deployment-preflight.json`](evidence/databricks/deployment-preflight.json) |
 | Elastic publication and hybrid retrieval | 389 verified chunks; live RRF query passed | [`evidence/elastic/index-publication.json`](evidence/elastic/index-publication.json), [`evidence/elastic/retrieval-smoke.json`](evidence/elastic/retrieval-smoke.json) |
 | MLflow upload | Passed | [`evidence/databricks/data-plane-tracking.json`](evidence/databricks/data-plane-tracking.json) |
 

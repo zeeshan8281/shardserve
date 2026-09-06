@@ -1,0 +1,17 @@
+{
+  "job_id": 655087961621636,
+  "operation": "status",
+  "package_version": "0.2.0",
+  "result": {
+    "experiment": "/Shared/ShardServe",
+    "input_rows": 4,
+    "input_table": "workspace.shardserve.inputs",
+    "result_rows": 6,
+    "results_table": "workspace.shardserve.results",
+    "runs": 3,
+    "volume": "/Volumes/workspace/shardserve/artifacts"
+  },
+  "run_id": 468451887299114,
+  "status": "SUCCESS",
+  "task_run_id": 981114202439903
+}
