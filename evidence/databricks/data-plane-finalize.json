@@ -1,0 +1,16 @@
+{
+  "commit": {
+    "attempt_rows_considered": 4
+  },
+  "tracking": {
+    "mlflow_run_id": "9e1a8319fde7431980fa3d6a71344245",
+    "status": "uploaded"
+  },
+  "validation": {
+    "complete": true,
+    "failed": 0,
+    "run_id": "d76e3eda34d7ccf4506d6e61c8b8a125ea4eb28990463ec1e9538cba0773009c",
+    "successful": 4,
+    "unique_terminal_results": 4
+  }
+}

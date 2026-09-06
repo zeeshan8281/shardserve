@@ -1,0 +1,19 @@
+{
+  "job_run_id": 1116666535365140,
+  "result": {
+    "experiment": "/Shared/ShardServe",
+    "input_rows": 4,
+    "input_table": "workspace.shardserve.inputs",
+    "result_rows": 6,
+    "results_table": "workspace.shardserve.results",
+    "runs": 3,
+    "volume": "/Volumes/workspace/shardserve/artifacts"
+  },
+  "state": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "task_run_id": 125898576286254
+}

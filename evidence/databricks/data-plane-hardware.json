@@ -1,0 +1,15 @@
+{
+  "cpu_cores": 4,
+  "gpus": [
+    "0, NVIDIA L4, GPU-a859aa18-b4a5-f880-4ae8-f3dd03a75bbd, 23034 MiB",
+    "1, NVIDIA L4, GPU-8b4a2dd3-78ac-92ca-3acc-8ff0177f6c70, 23034 MiB"
+  ],
+  "memory_mib": 32768,
+  "provider": "Modal",
+  "rank_mapping": [
+    0,
+    1
+  ],
+  "requested": "L4:2",
+  "reserved_gpu_count": 2
+}

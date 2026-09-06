@@ -1,0 +1,51 @@
+{
+  "name": "ShardServe Data Plane",
+  "max_concurrent_runs": 1,
+  "timeout_seconds": 900,
+  "parameters": [
+    {"name": "operation", "default": "status"},
+    {"name": "catalog", "default": "workspace"},
+    {"name": "schema", "default": "shardserve"},
+    {"name": "input_table", "default": "workspace.shardserve.inputs"},
+    {"name": "results_table", "default": "workspace.shardserve.results"},
+    {"name": "volume_root", "default": "/Volumes/workspace/shardserve/artifacts/runs"},
+    {"name": "input_version", "default": ""},
+    {"name": "hardware_json", "default": ""},
+    {"name": "config_json", "default": ""},
+    {"name": "run_directory", "default": ""},
+    {"name": "max_attempts", "default": "2"},
+    {"name": "experiment", "default": "/Shared/ShardServe"}
+  ],
+  "environments": [
+    {
+      "environment_key": "default",
+      "spec": {"environment_version": "4"}
+    }
+  ],
+  "tasks": [
+    {
+      "task_key": "control",
+      "timeout_seconds": 900,
+      "max_retries": 0,
+      "environment_key": "default",
+      "notebook_task": {
+        "notebook_path": "/Shared/shardserve-data-plane/control-plane",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "operation": "{{job.parameters.operation}}",
+          "catalog": "{{job.parameters.catalog}}",
+          "schema": "{{job.parameters.schema}}",
+          "input_table": "{{job.parameters.input_table}}",
+          "results_table": "{{job.parameters.results_table}}",
+          "volume_root": "{{job.parameters.volume_root}}",
+          "input_version": "{{job.parameters.input_version}}",
+          "hardware_json": "{{job.parameters.hardware_json}}",
+          "config_json": "{{job.parameters.config_json}}",
+          "run_directory": "{{job.parameters.run_directory}}",
+          "max_attempts": "{{job.parameters.max_attempts}}",
+          "experiment": "{{job.parameters.experiment}}"
+        }
+      }
+    }
+  ]
+}

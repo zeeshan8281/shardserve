@@ -1,0 +1,59 @@
+{
+  "identity": {
+    "code_revision": "79bf6a20ea5d43a8019d180532b7591d45efd8a944454ab7d4cbe4a12c80f90f",
+    "generation": {
+      "prefix_reuse": false,
+      "sampling": "greedy"
+    },
+    "hardware": {
+      "max_duration_seconds": 1800,
+      "model_storage": "Modal Volume shardserve-models",
+      "provider": "Modal",
+      "rank_mapping": [
+        0,
+        1
+      ],
+      "requested": "L4:2",
+      "reserved_gpu_count": 2
+    },
+    "input_digest": "81afae8ec0de770d69d1c268d15fdcbf6684c3aafc0c088e49b36f4fb6939ea4",
+    "input_snapshot": {
+      "table": "workspace.shardserve.inputs",
+      "version": 3
+    },
+    "max_attempts": 2,
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "model_revision": "14d7620ba47cf51be0b176e14e27e38a34d4ff88",
+    "retryable_error_codes": [
+      "replica_failed",
+      "TimeoutError",
+      "ConnectionError",
+      "transient"
+    ],
+    "runtime": {
+      "context": 256,
+      "diagnostic": false,
+      "graphs": false,
+      "kv_blocks": 256,
+      "max_live": 4,
+      "output_buffer": 32,
+      "prefill_chunk": 32,
+      "queue_size": 16,
+      "startup_timeout": 600.0,
+      "token_budget": 32,
+      "watchdog": 180.0,
+      "world_size": 2
+    },
+    "tokenizer_revision": "14d7620ba47cf51be0b176e14e27e38a34d4ff88"
+  },
+  "row_count": 4,
+  "run_id": "d76e3eda34d7ccf4506d6e61c8b8a125ea4eb28990463ec1e9538cba0773009c",
+  "shards": [
+    {
+      "path": "input-000000.json",
+      "row_count": 4,
+      "sha256": "81afae8ec0de770d69d1c268d15fdcbf6684c3aafc0c088e49b36f4fb6939ea4"
+    }
+  ],
+  "unique_key_count": 4
+}

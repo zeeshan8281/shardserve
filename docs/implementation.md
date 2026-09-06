@@ -1,6 +1,6 @@
 # Implementation and evidence plan
 
-The PRD remains the release contract. The GPU core and Databricks serverless Delta/MLflow path have hardware evidence; classic Databricks GPU and performance acceptance are incomplete.
+The PRD remains the release contract. The GPU core and the split Modal GPU/Databricks serverless data plane have live evidence; performance acceptance is incomplete.
 
 ## P0 audit
 
@@ -31,7 +31,7 @@ Selected model: `Qwen/Qwen2.5-3B-Instruct` revision `14d7620ba47cf51be0b176e14e2
 | P5 | Versioned Delta preparation, attempt sealing, insert-only single-writer commit, Databricks serverless Delta recovery, Unity Catalog volume persistence, corruption rejection and MLflow upload | Actual classic GPU job on a workspace that permits classic compute |
 | P6 | Deterministic workload and bounded HTTP comparison driver | All five matched comparisons, at least three repeats, raw GPU records, profiler traces, actual cost |
 
-GPU evidence was collected on 2026-09-06 using two co-located Modal NVIDIA L4 GPUs with 23,034 MiB each. Raw calibration and verified reports, hardware identities, graph results and fault timings are committed under `evidence/gpu`. Model weights lived only on ephemeral Modal storage and were not copied into this repository. Databricks serverless run `418965407352167` verified the Delta and MLflow path; evidence is under `evidence/databricks`. The connected Free Edition workspace cannot create classic compute, and serverless GPU run `584842402884687` reported exhausted A10 quota. P6 still needs a separate bounded performance allocation.
+GPU evidence was collected on 2026-09-06 using two co-located Modal NVIDIA L4 GPUs with 23,034 MiB each. Raw calibration and verified reports, hardware identities, graph results and fault timings are committed under `evidence/gpu`. Model weights remain in a Modal Volume and were not copied into this repository. Databricks job `655087961621636` and Modal app `ap-ApmndI2GsQAOjZetqibt7X` passed the split data-plane flow; evidence is under `evidence/databricks`. The connected Free Edition workspace cannot create classic compute, and serverless GPU run `584842402884687` reported exhausted A10 quota. P6 still needs a separate bounded performance allocation.
 
 ## Known verification gaps
 

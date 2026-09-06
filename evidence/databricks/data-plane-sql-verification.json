@@ -1,0 +1,61 @@
+{
+  "manifest": {
+    "chunks": [
+      {
+        "chunk_index": 0,
+        "row_count": 1,
+        "row_offset": 0
+      }
+    ],
+    "format": "JSON_ARRAY",
+    "schema": {
+      "column_count": 4,
+      "columns": [
+        {
+          "name": "run_id",
+          "position": 0,
+          "type_name": "STRING",
+          "type_text": "STRING"
+        },
+        {
+          "name": "rows",
+          "position": 1,
+          "type_name": "LONG",
+          "type_text": "BIGINT"
+        },
+        {
+          "name": "distinct_requests",
+          "position": 2,
+          "type_name": "LONG",
+          "type_text": "BIGINT"
+        },
+        {
+          "name": "completed",
+          "position": 3,
+          "type_name": "LONG",
+          "type_text": "BIGINT"
+        }
+      ]
+    },
+    "total_chunk_count": 1,
+    "total_row_count": 1,
+    "truncated": false
+  },
+  "result": {
+    "chunk_index": 0,
+    "data_array": [
+      [
+        "d76e3eda34d7ccf4506d6e61c8b8a125ea4eb28990463ec1e9538cba0773009c",
+        "4",
+        "4",
+        "4"
+      ]
+    ],
+    "row_count": 1,
+    "row_offset": 0
+  },
+  "statement_id": "01f1a9c5-d58d-1e40-9e30-84f8ce6d326a",
+  "status": {
+    "state": "SUCCEEDED"
+  }
+}

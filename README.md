@@ -2,7 +2,7 @@
 
 Custom Qwen tensor-parallel inference with coordinated continuous batching, paged KV storage, and a bounded Databricks batch adapter.
 
-**Status: GPU core and Databricks Delta/MLflow integration verified; classic Databricks GPU and performance acceptance remain.** CPU checks pass locally. Full-model BF16 TP1/TP2 correctness, NCCL, the Triton paged-attention kernel, CUDA Graphs, cancellation, and injected rank failures passed on two Modal NVIDIA L4 GPUs. Delta recovery, corruption rejection, duplicate replay, Unity Catalog volume persistence, and MLflow upload passed in Databricks serverless. See [phase evidence and limitations](docs/implementation.md).
+**Status: the Databricks data plane and two-L4 Modal worker have passed end to end; performance acceptance remains.** CPU checks pass locally. Full-model BF16 TP1/TP2 correctness, NCCL, the Triton paged-attention kernel, CUDA Graphs, cancellation, and injected rank failures passed on two Modal NVIDIA L4 GPUs. Databricks serverless now snapshots Delta inputs, persists run artifacts in a Unity Catalog Volume, commits validated results to Delta, and records the run in MLflow. See [phase evidence and limitations](docs/implementation.md).
 
 The runtime owns weight partitioning, forward execution, allocation, iteration plans and sampling. It does not call Hugging Face `generate()`, vLLM or a managed model endpoint. Hugging Face supplies tokenization/download tooling and verification-only reference forward execution. MIT RoPE/RMSNorm math and the paged Triton kernel are adapted from [cloud-inference-from-scratch at 1747158](https://github.com/zeeshan8281/cloud-inference-from-scratch/tree/174715839aa256a2010b21a796da716cae1a46f4); see `LICENSE`.
 
@@ -82,6 +82,16 @@ Run the 128/1024/3072 prompt × 32/128 output × concurrency 1/4/8 matrix, disti
 The driver has a `--backend vllm` HTTP adapter targeting pinned vLLM 0.10.1 `/v1/completions` with identical token IDs, greedy sampling and output caps. That adapter is unverified against a live vLLM server. It requests logprobs to count stream tokens, which adds measurement overhead and must be disclosed; do not claim a fair performance comparison until that overhead and stopping behavior are validated. Install vLLM in a separate environment to avoid altering the custom engine stack. No benchmark numbers are published yet.
 
 ## Durable batch jobs
+
+The hosted path is simple: Databricks stores the input and final result tables; Modal runs the custom engine on two L4 GPUs; this Mac only relays small JSON shards and never stores model weights. The permanent Databricks job is `655087961621636`. Run it with `operation=prepare`, copy the returned Volume directory, then execute:
+
+```bash
+python3 deploy/databricks/relay.py \
+  /Volumes/workspace/shardserve/artifacts/runs/RUN_ID \
+  --job-id 655087961621636 --profile shardserve
+```
+
+The relay downloads the sealed input shard to a temporary directory, invokes `deploy/modal/worker.py`, uploads the sealed output, and asks Databricks to commit, validate, and log it. Temporary local files are deleted on exit. The live four-request acceptance run produced four distinct completed Delta rows and MLflow run `9e1a8319fde7431980fa3d6a71344245`; compact evidence is under [`evidence/databricks`](evidence/databricks).
 
 For local protocol checks, use a JSON token workload, an actual hardware description and SQLite:
 

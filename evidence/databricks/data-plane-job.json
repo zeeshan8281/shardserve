@@ -1,0 +1,101 @@
+{
+  "job_id": 655087961621636,
+  "creator_user_name": "zeeshan8281@gmail.com",
+  "settings": {
+    "email_notifications": {},
+    "environments": [
+      {
+        "environment_key": "default",
+        "spec": {
+          "environment_version": "4"
+        }
+      }
+    ],
+    "format": "MULTI_TASK",
+    "max_concurrent_runs": 1,
+    "name": "ShardServe Data Plane",
+    "parameters": [
+      {
+        "default": "status",
+        "name": "operation"
+      },
+      {
+        "default": "workspace",
+        "name": "catalog"
+      },
+      {
+        "default": "shardserve",
+        "name": "schema"
+      },
+      {
+        "default": "workspace.shardserve.inputs",
+        "name": "input_table"
+      },
+      {
+        "default": "workspace.shardserve.results",
+        "name": "results_table"
+      },
+      {
+        "default": "/Volumes/workspace/shardserve/artifacts/runs",
+        "name": "volume_root"
+      },
+      {
+        "default": "",
+        "name": "input_version"
+      },
+      {
+        "default": "",
+        "name": "hardware_json"
+      },
+      {
+        "default": "",
+        "name": "config_json"
+      },
+      {
+        "default": "",
+        "name": "run_directory"
+      },
+      {
+        "default": "2",
+        "name": "max_attempts"
+      },
+      {
+        "default": "/Shared/ShardServe",
+        "name": "experiment"
+      }
+    ],
+    "queue": {
+      "enabled": true
+    },
+    "tasks": [
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "{{job.parameters.catalog}}",
+            "config_json": "{{job.parameters.config_json}}",
+            "experiment": "{{job.parameters.experiment}}",
+            "hardware_json": "{{job.parameters.hardware_json}}",
+            "input_table": "{{job.parameters.input_table}}",
+            "input_version": "{{job.parameters.input_version}}",
+            "max_attempts": "{{job.parameters.max_attempts}}",
+            "operation": "{{job.parameters.operation}}",
+            "results_table": "{{job.parameters.results_table}}",
+            "run_directory": "{{job.parameters.run_directory}}",
+            "schema": "{{job.parameters.schema}}",
+            "volume_root": "{{job.parameters.volume_root}}"
+          },
+          "notebook_path": "/Shared/shardserve-data-plane/control-plane",
+          "source": "WORKSPACE"
+        },
+        "run_if": "ALL_SUCCESS",
+        "task_key": "control",
+        "timeout_seconds": 900
+      }
+    ],
+    "timeout_seconds": 900,
+    "webhook_notifications": {}
+  }
+}
