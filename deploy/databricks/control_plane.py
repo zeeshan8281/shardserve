@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install --no-deps /Workspace/Shared/shardserve-data-plane/shardserve-0.1.2-py3-none-any.whl
+# MAGIC %pip install --no-deps /Workspace/Shared/shardserve-data-plane/shardserve-0.2.0-py3-none-any.whl
 
 # COMMAND ----------
 

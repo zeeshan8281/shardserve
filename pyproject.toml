@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "shardserve"
-version = "0.1.2"
-description = "Custom Qwen tensor-parallel inference and bounded batch execution"
+version = "0.2.0"
+description = "Retrieval-aware custom Qwen tensor-parallel inference"
 requires-python = ">=3.9"
 dependencies = ["torch==2.8.0", "transformers==4.57.6", "safetensors==0.7.0", "huggingface-hub==0.36.2"]
 

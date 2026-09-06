@@ -9,6 +9,8 @@ The hosted path uses Databricks for durable inputs, Delta results, Unity Catalog
 
 The proposed next research milestone is [retrieval-aware tensor-parallel inference with Databricks and Elastic](docs/project-direction.md). It is documented as a proposal until its correctness and performance gates have measured evidence.
 
+The first deployable slice adds an Elastic-backed `/answer` endpoint and a two-L4 Modal web service. See the [deployment runbook](docs/deploy.md).
+
 ## What works
 
 - Custom Qwen forward pass with TP1 and TP2; no Hugging Face `generate()`, vLLM, or managed model endpoint.
@@ -117,6 +119,16 @@ curl http://127.0.0.1:8080/health
 curl -N http://127.0.0.1:8080/stream \
   -H 'Content-Type: application/json' \
   -d '{"request_id":"example-1","prompt":"Explain tensor parallelism briefly.","max_new_tokens":32}'
+```
+
+With Elastic configured, start the same server with `--elastic` and ask a cited question:
+
+```bash
+python -m shardserve ask \
+  --url http://127.0.0.1:8080 \
+  --repository shardserve \
+  --question 'Where is KV capacity reserved?' \
+  --debug
 ```
 
 `POST /generate` returns one terminal result. `POST /stream` emits ordered token events followed by one terminal event. `DELETE /requests/ID` requests cancellation at an iteration boundary. Binding beyond loopback requires `SHARDSERVE_API_TOKEN`; clients then send `Authorization: Bearer TOKEN`.

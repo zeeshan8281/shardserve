@@ -1,14 +1,15 @@
-"""Loopback HTTP adapter; no public deployment. Both modes use the same engine."""
+"""Authenticated HTTP adapter; raw generation and retrieval share one engine."""
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hmac
 import json
 import os
 from urllib.parse import unquote
+from .retrieval import RetrievalUnavailable, answer_response, prepare_answer
 
 MAX_BODY=65536
 
 
-def serve(engine, host='127.0.0.1', port=8080):
+def serve(engine, host='127.0.0.1', port=8080, retriever=None):
     secret=os.environ.get('SHARDSERVE_API_TOKEN')
     if host not in ('127.0.0.1','localhost','::1') and not secret:
         raise ValueError('non-loopback binding requires SHARDSERVE_API_TOKEN')
@@ -25,7 +26,8 @@ def serve(engine, host='127.0.0.1', port=8080):
         def do_GET(self):
             if not self.authorized(): return self.send_json(401,{'error':'unauthorized'})
             if self.path not in ('/health','/metrics'): return self.send_json(404,{'error':'not_found'})
-            health=engine.health(); self.send_json(200 if health['ready'] else 503,health)
+            health=engine.health(); health['retrieval_configured']=retriever is not None
+            self.send_json(200 if health['ready'] else 503,health)
         def do_DELETE(self):
             if not self.authorized(): return self.send_json(401,{'error':'unauthorized'})
             if not self.path.startswith('/requests/'): return self.send_json(404,{'error':'not_found'})
@@ -35,9 +37,10 @@ def serve(engine, host='127.0.0.1', port=8080):
             except KeyError: self.send_json(404,{'error':'unknown_request'})
         def do_POST(self):
             if not self.authorized(): return self.send_json(401,{'error':'unauthorized'})
-            if self.path not in ('/generate','/stream'): return self.send_json(404,{'error':'not_found'})
+            if self.path not in ('/generate','/stream','/answer'): return self.send_json(404,{'error':'not_found'})
             request=None
             streaming=False
+            prepared=None
             try:
                 if self.headers.get('Transfer-Encoding'): raise ValueError('chunked requests unsupported')
                 length=int(self.headers.get('Content-Length','0'))
@@ -45,6 +48,9 @@ def serve(engine, host='127.0.0.1', port=8080):
                 body=self.rfile.read(length)
                 if len(body)!=length: raise ValueError('truncated body')
                 row=json.loads(body,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite JSON')))
+                if self.path=='/answer':
+                    if retriever is None: return self.send_json(503,{'error':'retrieval_not_configured'})
+                    prepared=prepare_answer(row,retriever); row=prepared['engine_row']
                 request=engine.submit(row)
                 if self.path=='/stream':
                     self.send_response(200); self.send_header('Content-Type','text/event-stream')
@@ -54,11 +60,17 @@ def serve(engine, host='127.0.0.1', port=8080):
                         self.wfile.write(f"id: {event['seq']}\ndata: {json.dumps(event)}\n\n".encode()); self.wfile.flush()
                     elif 'terminal' in event:
                         result=event['terminal']; result['output_text']=engine.tokenizer.decode(result['output_token_ids'])
+                        if prepared:
+                            result=answer_response(result,prepared,request.prompt,engine.config.world_size)
                         self.send_json(200,result)
             except (ValueError,TypeError,UnicodeError) as exc:
                 if not streaming: self.send_json(400,{'error':str(exc)})
+            except LookupError as exc:
+                if not streaming: self.send_json(404,{'error':str(exc)})
             except OverflowError as exc:
                 self.send_json(429,{'error':str(exc)})
+            except RetrievalUnavailable as exc:
+                if not streaming: self.send_json(502,{'error':str(exc)})
             except RuntimeError as exc:
                 if not streaming: self.send_json(503,{'error':str(exc)})
             except (BrokenPipeError,ConnectionResetError,TimeoutError,OSError):
