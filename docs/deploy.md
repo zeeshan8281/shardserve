@@ -23,7 +23,7 @@ Commit the exact source revision first. The publisher refuses a dirty tree becau
 For BM25 plus semantic retrieval on an Elastic trial:
 
 ```bash
-python3 deploy/elastic/bootstrap.py \
+python3 -m deploy.elastic.bootstrap \
   --repository shardserve \
   --inference-id .elser-2-elasticsearch \
   --manifest-output evidence/elastic/index-publication.json
@@ -109,4 +109,3 @@ Run the existing prepare → Modal → finalize workflow when publishing durable
 - Share the application token only with intended reviewers; rotate it after the demo.
 - Do not promise prefix-cache performance yet. The current `/answer` response reports `prefix_cache_enabled: false` and `reused_prefix_tokens: 0` truthfully.
 - Watch Modal GPU usage. Two L4 GPUs are allocated while the container is warm.
-
