@@ -58,6 +58,105 @@ The best live sequence is:
 5. Kibana shows search latency, prefix hits, saved prefill tokens, KV pressure, TTFT, collective time, and any failures.
 6. Databricks replays the same stored retrieval packs and checks exact output-token parity, retrieval quality, and one durable terminal result per request.
 
+## How people use it
+
+There should be one simple public experience and two progressively deeper technical experiences. People should not need Databricks, Elastic, or Modal credentials to try the hosted demo.
+
+| User | Experience | What they see |
+|---|---|---|
+| Visitor or recruiter | Ask a technical question in a small hosted page | Answer, source citations, corpus revision, and a linkable run ID |
+| Application developer | Call one HTTP endpoint or use a thin CLI | Structured answer, citations, timing, retrieval snapshot, and trace ID |
+| Systems researcher | Replay a published workload against cache modes | Raw per-request results, correctness checks, and MLflow comparisons |
+| Operator | Open Kibana and Databricks | Live request forensics in Elastic; durable experiments and evaluation in Databricks |
+
+### Hosted demonstration
+
+The public page needs only a repository selector, a question box, and an optional “show engine details” switch. Example questions should be built into the page so a reviewer can get a meaningful result immediately. The normal result shows:
+
+- the generated answer;
+- citations linked to exact source chunks;
+- the indexed repository and corpus revision;
+- total latency and time to first token;
+- a stable run ID.
+
+The details view adds the retrieved ranks, prompt-token count, reused-prefix tokens, TP degree, NCCL time, KV blocks, model revision, and links to a read-only Kibana trace and MLflow run when sharing permissions allow it.
+
+The hosted service owns all infrastructure credentials. Give the browser a narrowly scoped application token or place the demo behind rate limiting; never expose Elastic, Databricks, Modal, or OTLP keys to frontend code. The public corpus is read-only, requests have strict token and time limits, and prompt/output text is excluded from operational telemetry by default.
+
+### Developer API
+
+Add one retrieval-aware endpoint while retaining the existing raw generation endpoints for engine testing:
+
+```http
+POST /answer
+Authorization: Bearer $SHARDSERVE_API_TOKEN
+Content-Type: application/json
+
+{
+  "request_id": "demo-001",
+  "question": "Why does ShardServe reserve KV capacity before admission?",
+  "repository": "shardserve",
+  "max_new_tokens": 160,
+  "include_debug": true
+}
+```
+
+The response contract should be stable and compact:
+
+```json
+{
+  "request_id": "demo-001",
+  "answer": "...",
+  "citations": [
+    {
+      "doc_id": "shardserve/scheduler.py:71-95",
+      "source_url": "https://github.com/...",
+      "content_sha256": "..."
+    }
+  ],
+  "retrieval": {
+    "index": "shardserve-docs-v12",
+    "config_sha256": "...",
+    "prompt_token_sha256": "..."
+  },
+  "engine": {
+    "model_revision": "14d7620...",
+    "tensor_parallel_size": 2,
+    "input_tokens": 1240,
+    "reused_prefix_tokens": 736,
+    "ttft_ms": 182.4
+  },
+  "trace_id": "...",
+  "terminal_status": "completed"
+}
+```
+
+`include_debug` controls whether internal timing and cache fields are returned. Citations, corpus identity, status, and request identity are always present. The endpoint retrieves evidence first, freezes the retrieval pack, builds the canonical prompt, and then submits it through the existing scheduler. It does not create a second inference implementation.
+
+A future `shardserve ask` command can be a thin standard-library HTTP client over this endpoint. It should print the answer and citations by default and emit the complete JSON with `--json`. There is no reason to create a separate Python SDK until users require one.
+
+### Reproducible research use
+
+A technical reviewer should be able to choose a published run manifest and reproduce one bounded comparison:
+
+```text
+same Delta query snapshot
+same frozen Elastic retrieval packs
+same model/tokenizer/source revisions
+same two-L4 hardware class
+    ├── prefix cache disabled
+    ├── exact prefix cache enabled
+    └── cache plus locality scheduling
+```
+
+The relay launches those modes, commits their results, and prints the MLflow run URLs. Large model files, indices, and raw traces remain remote. A contributor cloning the repository downloads only source code and compact fixtures unless they explicitly launch a GPU run.
+
+### Using a different corpus
+
+Self-hosters add documents to the governed Delta corpus table rather than uploading directly into the serving process. The publication job chunks and hashes the documents, builds a new immutable Elastic index, verifies it, and advances the alias. Existing retrieval packs remain replayable against their original index identity.
+
+The first supported sources should be Git repositories and Markdown/JSON benchmark evidence. PDF, web crawling, access-control synchronization, and arbitrary connectors can wait until a real user needs them.
+
 ## Architecture
 
 ```mermaid
@@ -416,4 +515,3 @@ Research used first-party product documentation and the two repositories, access
 - **Elastic**, “Create a custom inference endpoint,” GA, added in 8.19: [API documentation](https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-inference-put-custom).
 - **Elastic**, “Ranking evaluation,” current documentation: [documentation](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/search-rank-eval).
 - **Elastic**, “OpenTelemetry with Elastic,” current documentation: [documentation](https://www.elastic.co/docs/solutions/observability/get-started/quickstart-elastic-cloud-otel-endpoint).
-
