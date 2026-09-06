@@ -2,13 +2,13 @@
 
 Custom Qwen tensor-parallel inference with coordinated continuous batching, paged KV storage, and a bounded Databricks batch adapter.
 
-**Status: implementation under verification. Not a completed v1 release.** CPU checks run locally; real CUDA TP2, NCCL, BF16 correctness, CUDA Graphs, Databricks execution and performance gates remain unverified. No cloud resources have been allocated. See [phase evidence and limitations](docs/implementation.md).
+**Status: GPU core verified; Databricks and performance acceptance remain.** CPU checks pass locally. Full-model BF16 TP1/TP2 correctness, NCCL, the Triton paged-attention kernel, CUDA Graphs, cancellation, and injected rank failures passed on two Modal NVIDIA L4 GPUs. Databricks execution and matched performance gates remain unverified. See [phase evidence and limitations](docs/implementation.md).
 
 The runtime owns weight partitioning, forward execution, allocation, iteration plans and sampling. It does not call Hugging Face `generate()`, vLLM or a managed model endpoint. Hugging Face supplies tokenization/download tooling and verification-only reference forward execution. MIT RoPE/RMSNorm math and the paged Triton kernel are adapted from [cloud-inference-from-scratch at 1747158](https://github.com/zeeshan8281/cloud-inference-from-scratch/tree/174715839aa256a2010b21a796da716cae1a46f4); see `LICENSE`.
 
 ## Local setup and checks
 
-Run commands from this repository root. Local CPU checks were exercised with Python 3.9.6, Torch 2.8.0, Transformers 4.57.6, safetensors 0.7.0 and huggingface-hub 0.36.2. Linux CUDA dependencies are pinned but not validated on hardware yet.
+Run commands from this repository root. Local CPU checks were exercised with Python 3.9.6, Torch 2.8.0, Transformers 4.57.6, safetensors 0.7.0 and huggingface-hub 0.36.2. The pinned Linux CUDA stack was exercised on Modal L4 hardware.
 
 ```bash
 python3 -m venv .venv
@@ -40,7 +40,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=2 \
   -m shardserve.verify --model MODEL_SNAPSHOT --output artifacts/tp2-calibration.json
 ```
 
-These commands deliberately return a nonzero status while no numerical envelope exists, but write raw error records after successful execution. Establish and commit BF16 limits from repeated measurements and their numerical explanation; never invent or loosen limits to hide a regression. An envelope JSON supplies `max_absolute`, `max_relative`, `normalized_rmse`, `evidence_files` and `numerical_explanation`. Rerun each command with `--envelope PATH` to evaluate it. Exact greedy sequences are still required. The current small regression corpus must be expanded and frozen as part of hardware acceptance.
+These commands deliberately return a nonzero status while no numerical envelope exists, but write raw error records after successful execution. The committed [BF16 envelope](evidence/gpu/bf16-envelope.json) was derived 25% above three repeated TP1/TP2 measurements. The expanded seven-prompt corpus then passed exact greedy equality in both verified reruns. New hardware must recalibrate rather than silently loosen this envelope.
 
 ```bash
 SHARDSERVE_TRACE_DIR=artifacts/traces python -m shardserve.gpu_checks graphs \
@@ -49,7 +49,7 @@ python -m shardserve.gpu_checks fault \
   --model MODEL_SNAPSHOT --output artifacts/gpu-faults.json
 ```
 
-Graphs are opt-in, with buckets 1/2/4/8, private padding slots and eager fallback. Trace output is bounded to eight active iterations per rank. The graph check compares TP1, TP2 eager and TP2 graph outputs plus batch-size transitions and cancellation. The fault harness includes deliberate rank process exits around all-reduce and external kill after stream output. **These commands have not run on CUDA here.** Do not set `SHARDSERVE_TEST_CRASH` during normal execution; it is a fault-test hook.
+Graphs are opt-in, with buckets 1/2/4/8, private padding slots and eager fallback. Trace output is bounded to eight active iterations per rank. The graph check passed TP1, TP2 eager and TP2 graph output equality, batch-size transitions, cancellation, and 29 graph replays on Modal. The fault harness passed deliberate exits before/after all-reduce and an external kill after stream output; shutdown took at most 1.7 seconds. Evidence is under [`evidence/gpu`](evidence/gpu). Do not set `SHARDSERVE_TEST_CRASH` during normal execution; it is a fault-test hook.
 
 ## Private API
 

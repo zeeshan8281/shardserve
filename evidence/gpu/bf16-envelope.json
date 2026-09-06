@@ -1,0 +1,10 @@
+{
+  "evidence_files": [
+    "tp1-calibration.json",
+    "tp2-calibration.json"
+  ],
+  "max_absolute": 60.0000001,
+  "max_relative": 5000000.0000001,
+  "normalized_rmse": 0.1324507662786007,
+  "numerical_explanation": "Limits are 25% above the observed maxima from three repeated TP1 and TP2 BF16 comparisons on the same two-L4 host; greedy output equality remains exact."
+}

@@ -1,0 +1,1655 @@
+{
+  "environment": {
+    "command": [
+      "/workspace/shardserve/shardserve/gpu_checks.py",
+      "graphs",
+      "--model",
+      "/tmp/models/models--Qwen--Qwen2.5-3B-Instruct/snapshots/14d7620ba47cf51be0b176e14e27e38a34d4ff88",
+      "--output",
+      "/tmp/shardserve-checks/gpu-graphs.json"
+    ],
+    "cuda_available": true,
+    "cuda_count": 2,
+    "devices": [
+      {
+        "name": "NVIDIA L4",
+        "rank": 0,
+        "total_memory": 23659151360
+      },
+      {
+        "name": "NVIDIA L4",
+        "rank": 1,
+        "total_memory": 23659151360
+      }
+    ],
+    "git": {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "unavailable": "[Errno 2] No such file or directory: 'git'"
+    },
+    "inventory": {
+      "command": [
+        "nvidia-smi",
+        "-q"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "\n==============NVSMI LOG==============\n\nTimestamp                                 : Sun Sep  6 06:06:22 2026\nDriver Version                            : 580.95.05\nCUDA Version                              : 13.0\n\nAttached GPUs                             : 2\nGPU 00000000:80:01.0\n    Product Name                          : NVIDIA L4\n    Product Brand                         : NVIDIA\n    Product Architecture                  : Ada Lovelace\n    Display Mode                          : Requested functionality has been deprecated\n    Display Attached                      : Yes\n    Display Active                        : Disabled\n    Persistence Mode                      : Enabled\n    Addressing Mode                       : None\n    MIG Mode\n        Current                           : N/A\n        Pending                           : N/A\n    Accounting Mode                       : Disabled\n    Accounting Mode Buffer Size           : 4000\n    Driver Model\n        Current                           : N/A\n        Pending                           : N/A\n    Serial Number                         : 1322823085007\n    GPU UUID                              : GPU-be0fc318-cb08-b134-9337-b3f9aaca18ac\n    GPU PDI                               : 0x93bfdf679a4a4dab\n    Minor Number                          : 5\n    VBIOS Version                         : 95.04.29.00.07\n    MultiGPU Board                        : No\n    Board ID                              : 0x8001\n    Board Part Number                     : 900-2G193-6310-001\n    GPU Part Number                       : 27B8-895-A1\n    FRU Part Number                       : N/A\n    Platform Info\n        Chassis Serial Number             : N/A\n        Slot Number                       : N/A\n        Tray Index                        : N/A\n        Host ID                           : N/A\n        Peer Type                         : N/A\n        Module Id                         : N/A\n        GPU Fabric GUID                   : N/A\n    Inforom Version\n        Image Version                     : G193.0202.00.01\n        OEM Object                        : 2.1\n        ECC Object                        : 6.16\n        Power Management Object           : N/A\n    Inforom BBX Object Flush\n        Latest Timestamp                  : N/A\n        Latest Duration                   : N/A\n    GPU Operation Mode\n        Current                           : N/A\n        Pending                           : N/A\n    GPU C2C Mode                          : N/A\n    GPU Virtualization Mode\n        Virtualization Mode               : Pass-Through\n        Host VGPU Mode                    : N/A\n        vGPU Heterogeneous Mode           : N/A\n    GPU Recovery Action                   : None\n    GSP Firmware Version                  : 580.95.05\n    IBMNPU\n        Relaxed Ordering Mode             : N/A\n    PCI\n        Bus                               : Unknown Error\n        Device                            : Unknown Error\n        Domain                            : Unknown Error\n        Base Classcode                    : Unknown Error\n        Sub Classcode                     : Unknown Error\n        Device Id                         : Unknown Error\n        Bus Id                            : Unknown Error\n        Sub System Id                     : Unknown Error\n        GPU Link Info\n            PCIe Generation\n                Max                       : 3\n                Current                   : 3\n                Device Current            : 3\n                Device Max                : 4\n                Host Max                  : N/A\n            Link Width\n                Max                       : 16x\n                Current                   : 16x\n        Bridge Chip\n            Type                          : N/A\n            Firmware                      : N/A\n        Replays Since Reset               : 0\n        Replay Number Rollovers           : 0\n        Tx Throughput                     : 1464 KB/s\n        Rx Throughput                     : 292 KB/s\n        Atomic Caps Outbound              : N/A\n        Atomic Caps Inbound               : N/A\n    Fan Speed                             : N/A\n    Performance State                     : P0\n    Clocks Event Reasons\n        Idle                              : Not Active\n        Applications Clocks Setting       : Not Active\n        SW Power Cap                      : Not Active\n        HW Slowdown                       : Not Active\n            HW Thermal Slowdown           : Not Active\n            HW Power Brake Slowdown       : Not Active\n        Sync Boost                        : Not Active\n        SW Thermal Slowdown               : Not Active\n        Display Clock Setting             : Not Active\n    Clocks Event Reasons Counters\n        SW Power Capping                  : 636794 us\n        Sync Boost                        : 0 us\n        SW Thermal Slowdown               : 0 us\n        HW Thermal Slowdown               : 0 us\n        HW Power Braking                  : 0 us\n    Sparse Operation Mode                 : N/A\n    FB Memory Usage\n        Total                             : 23034 MiB\n        Reserved                          : 471 MiB\n        Used                              : 194 MiB\n        Free                              : 22370 MiB\n    BAR1 Memory Usage\n        Total                             : 32768 MiB\n        Used                              : 195 MiB\n        Free                              : 32573 MiB\n    Conf Compute Protected Memory Usage\n        Total                             : 0 MiB\n        Used                              : 0 MiB\n        Free                              : 0 MiB\n    Compute Mode                          : Default\n    Utilization\n        GPU                               : 84 %\n        Memory                            : 20 %\n        Encoder                           : 0 %\n        Decoder                           : 0 %\n        JPEG                              : 0 %\n        OFA                               : 0 %\n    Encoder Stats\n        Active Sessions                   : 0\n        Average FPS                       : 0\n        Average Latency                   : 0\n    FBC Stats\n        Active Sessions                   : 0\n        Average FPS                       : 0\n        Average Latency                   : 0\n    DRAM Encryption Mode\n        Current                           : N/A\n        Pending                           : N/A\n    ECC Mode\n        Current                           : Enabled\n        Pending                           : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable              : 0\n            SRAM Uncorrectable Parity     : 0\n            SRAM Uncorrectable SEC-DED    : 0\n            DRAM Correctable              : 0\n            DRAM Uncorrectable            : 0\n        Aggregate\n            SRAM Correctable              : 0\n            SRAM Uncorrectable Parity     : 0\n            SRAM Uncorrectable SEC-DED    : 0\n            DRAM Correctable              : 5\n            DRAM Uncorrectable            : 0\n            SRAM Threshold Exceeded       : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                       : 0\n            SRAM SM                       : 0\n            SRAM Microcontroller          : 0\n            SRAM PCIE                     : 0\n            SRAM Other                    : 0\n        Channel Repair Pending            : No\n        TPC Repair Pending                : No\n    Retired Pages\n        Single Bit ECC                    : N/A\n        Double Bit ECC                    : N/A\n        Pending Page Blacklist            : N/A\n    Remapped Rows\n        Correctable Error                 : 1\n        Uncorrectable Error               : 0\n        Pending                           : No\n        Remapping Failure Occurred        : No\n        Bank Remap Availability Histogram\n            Max                           : 96 bank(s)\n            High                          : 0 bank(s)\n            Partial                       : 0 bank(s)\n            Low                           : 0 bank(s)\n            None                          : 0 bank(s)\n    Temperature\n        GPU Current Temp                  : 51 C\n        GPU T.Limit Temp                  : 37 C\n        GPU Shutdown T.Limit Temp         : -5 C\n        GPU Slowdown T.Limit Temp         : -2 C\n        GPU Max Operating T.Limit Temp    : 0 C\n        GPU Target Temperature            : N/A\n        Memory Current Temp               : N/A\n        Memory Max Operating T.Limit Temp : N/A\n    GPU Power Readings\n        Average Power Draw                : 28.96 W\n        Instantaneous Power Draw          : 28.35 W\n        Current Power Limit               : 72.00 W\n        Requested Power Limit             : 72.00 W\n        Default Power Limit               : 72.00 W\n        Min Power Limit                   : 40.00 W\n        Max Power Limit                   : 72.00 W\n    GPU Memory Power Readings \n        Average Power Draw                : N/A\n        Instantaneous Power Draw          : N/A\n    Module Power Readings\n        Average Power Draw                : N/A\n        Instantaneous Power Draw          : N/A\n        Current Power Limit               : N/A\n        Requested Power Limit             : N/A\n        Default Power Limit               : N/A\n        Min Power Limit                   : N/A\n        Max Power Limit                   : N/A\n    Power Smoothing                       : N/A\n    Workload Power Profiles\n        Requested Profiles                : N/A\n        Enforced Profiles                 : N/A\n    Clocks\n        Graphics                          : 2040 MHz\n        SM                                : 2040 MHz\n        Memory                            : 6251 MHz\n        Video                             : 1770 MHz\n    Applications Clocks\n        Graphics                          : 2040 MHz\n        Memory                            : 6251 MHz\n    Default Applications Clocks\n        Graphics                          : 2040 MHz\n        Memory                            : 6251 MHz\n    Deferred Clocks\n        Memory                            : N/A\n    Max Clocks\n        Graphics                          : 2040 MHz\n        SM                                : 2040 MHz\n        Memory                            : 6251 MHz\n        Video                             : 1770 MHz\n    Max Customer Boost Clocks\n        Graphics                          : 2040 MHz\n    Clock Policy\n        Auto Boost                        : N/A\n        Auto Boost Default                : N/A\n    Fabric\n        State                             : N/A\n        Status                            : N/A\n        CliqueId                          : N/A\n        ClusterUUID                       : N/A\n        Health\n            Summary                       : N/A\n            Bandwidth                     : N/A\n            Route Recovery in progress    : N/A\n            Route Unhealthy               : N/A\n            Access Timeout Recovery       : N/A\n            Incorrect Configuration       : N/A\n    Processes\n        GPU instance ID                   : N/A\n        Compute instance ID               : N/A\n        Process ID                        : 1\n            Type                          : C\n            Name                          : /bin/dumb-init\n            Used GPU Memory               : 186 MiB\n    Capabilities\n        EGM                               : disabled\n\nGPU 00000000:80:02.0\n    Product Name                          : NVIDIA L4\n    Product Brand                         : NVIDIA\n    Product Architecture                  : Ada Lovelace\n    Display Mode                          : Requested functionality has been deprecated\n    Display Attached                      : Yes\n    Display Active                        : Disabled\n    Persistence Mode                      : Enabled\n    Addressing Mode                       : None\n    MIG Mode\n        Current                           : N/A\n        Pending                           : N/A\n    Accounting Mode                       : Disabled\n    Accounting Mode Buffer Size           : 4000\n    Driver Model\n        Current                           : N/A\n        Pending                           : N/A\n    Serial Number                         : 1322823084195\n    GPU UUID                              : GPU-b7a60119-2b7d-9f0f-03ae-36aeffcd8c57\n    GPU PDI                               : 0xe5541ec6cda20cf3\n    Minor Number                          : 6\n    VBIOS Version                         : 95.04.29.00.07\n    MultiGPU Board                        : No\n    Board ID                              : 0x8002\n    Board Part Number                     : 900-2G193-6310-001\n    GPU Part Number                       : 27B8-895-A1\n    FRU Part Number                       : N/A\n    Platform Info\n        Chassis Serial Number             : N/A\n        Slot Number                       : N/A\n        Tray Index                        : N/A\n        Host ID                           : N/A\n        Peer Type                         : N/A\n        Module Id                         : N/A\n        GPU Fabric GUID                   : N/A\n    Inforom Version\n        Image Version                     : G193.0202.00.01\n        OEM Object                        : 2.1\n        ECC Object                        : 6.16\n        Power Management Object           : N/A\n    Inforom BBX Object Flush\n        Latest Timestamp                  : N/A\n        Latest Duration                   : N/A\n    GPU Operation Mode\n        Current                           : N/A\n        Pending                           : N/A\n    GPU C2C Mode                          : N/A\n    GPU Virtualization Mode\n        Virtualization Mode               : Pass-Through\n        Host VGPU Mode                    : N/A\n        vGPU Heterogeneous Mode           : N/A\n    GPU Recovery Action                   : None\n    GSP Firmware Version                  : 580.95.05\n    IBMNPU\n        Relaxed Ordering Mode             : N/A\n    PCI\n        Bus                               : Unknown Error\n        Device                            : Unknown Error\n        Domain                            : Unknown Error\n        Base Classcode                    : Unknown Error\n        Sub Classcode                     : Unknown Error\n        Device Id                         : Unknown Error\n        Bus Id                            : Unknown Error\n        Sub System Id                     : Unknown Error\n        GPU Link Info\n            PCIe Generation\n                Max                       : 3\n                Current                   : 3\n                Device Current            : 3\n                Device Max                : 4\n                Host Max                  : N/A\n            Link Width\n                Max                       : 16x\n                Current                   : 16x\n        Bridge Chip\n            Type                          : N/A\n            Firmware                      : N/A\n        Replays Since Reset               : 0\n        Replay Number Rollovers           : 0\n        Tx Throughput                     : 341 KB/s\n        Rx Throughput                     : 292 KB/s\n        Atomic Caps Outbound              : N/A\n        Atomic Caps Inbound               : N/A\n    Fan Speed                             : N/A\n    Performance State                     : P0\n    Clocks Event Reasons\n        Idle                              : Not Active\n        Applications Clocks Setting       : Not Active\n        SW Power Cap                      : Not Active\n        HW Slowdown                       : Not Active\n            HW Thermal Slowdown           : Not Active\n            HW Power Brake Slowdown       : Not Active\n        Sync Boost                        : Not Active\n        SW Thermal Slowdown               : Not Active\n        Display Clock Setting             : Not Active\n    Clocks Event Reasons Counters\n        SW Power Capping                  : 0 us\n        Sync Boost                        : 0 us\n        SW Thermal Slowdown               : 0 us\n        HW Thermal Slowdown               : 0 us\n        HW Power Braking                  : 0 us\n    Sparse Operation Mode                 : N/A\n    FB Memory Usage\n        Total                             : 23034 MiB\n        Reserved                          : 471 MiB\n        Used                              : 194 MiB\n        Free                              : 22370 MiB\n    BAR1 Memory Usage\n        Total                             : 32768 MiB\n        Used                              : 195 MiB\n        Free                              : 32573 MiB\n    Conf Compute Protected Memory Usage\n        Total                             : 0 MiB\n        Used                              : 0 MiB\n        Free                              : 0 MiB\n    Compute Mode                          : Default\n    Utilization\n        GPU                               : 0 %\n        Memory                            : 0 %\n        Encoder                           : 0 %\n        Decoder                           : 0 %\n        JPEG                              : 0 %\n        OFA                               : 0 %\n    Encoder Stats\n        Active Sessions                   : 0\n        Average FPS                       : 0\n        Average Latency                   : 0\n    FBC Stats\n        Active Sessions                   : 0\n        Average FPS                       : 0\n        Average Latency                   : 0\n    DRAM Encryption Mode\n        Current                           : N/A\n        Pending                           : N/A\n    ECC Mode\n        Current                           : Enabled\n        Pending                           : Enabled\n    ECC Errors\n        Volatile\n            SRAM Correctable              : 0\n            SRAM Uncorrectable Parity     : 0\n            SRAM Uncorrectable SEC-DED    : 0\n            DRAM Correctable              : 0\n            DRAM Uncorrectable            : 0\n        Aggregate\n            SRAM Correctable              : 0\n            SRAM Uncorrectable Parity     : 0\n            SRAM Uncorrectable SEC-DED    : 0\n            DRAM Correctable              : 0\n            DRAM Uncorrectable            : 0\n            SRAM Threshold Exceeded       : No\n        Aggregate Uncorrectable SRAM Sources\n            SRAM L2                       : 0\n            SRAM SM                       : 0\n            SRAM Microcontroller          : 0\n            SRAM PCIE                     : 0\n            SRAM Other                    : 0\n        Channel Repair Pending            : No\n        TPC Repair Pending                : No\n    Retired Pages\n        Single Bit ECC                    : N/A\n        Double Bit ECC                    : N/A\n        Pending Page Blacklist            : N/A\n    Remapped Rows\n        Correctable Error                 : 0\n        Uncorrectable Error               : 0\n        Pending                           : No\n        Remapping Failure Occurred        : No\n        Bank Remap Availability Histogram\n            Max                           : 96 bank(s)\n            High                          : 0 bank(s)\n            Partial                       : 0 bank(s)\n            Low                           : 0 bank(s)\n            None                          : 0 bank(s)\n    Temperature\n        GPU Current Temp                  : 56 C\n        GPU T.Limit Temp                  : 31 C\n        GPU Shutdown T.Limit Temp         : -5 C\n        GPU Slowdown T.Limit Temp         : -2 C\n        GPU Max Operating T.Limit Temp    : 0 C\n        GPU Target Temperature            : N/A\n        Memory Current Temp               : N/A\n        Memory Max Operating T.Limit Temp : N/A\n    GPU Power Readings\n        Average Power Draw                : 30.48 W\n        Instantaneous Power Draw          : 29.94 W\n        Current Power Limit               : 72.00 W\n        Requested Power Limit             : 72.00 W\n        Default Power Limit               : 72.00 W\n        Min Power Limit                   : 40.00 W\n        Max Power Limit                   : 72.00 W\n    GPU Memory Power Readings \n        Average Power Draw                : N/A\n        Instantaneous Power Draw          : N/A\n    Module Power Readings\n        Average Power Draw                : N/A\n        Instantaneous Power Draw          : N/A\n        Current Power Limit               : N/A\n        Requested Power Limit             : N/A\n        Default Power Limit               : N/A\n        Min Power Limit                   : N/A\n        Max Power Limit                   : N/A\n    Power Smoothing                       : N/A\n    Workload Power Profiles\n        Requested Profiles                : N/A\n        Enforced Profiles                 : N/A\n    Clocks\n        Graphics                          : 2040 MHz\n        SM                                : 2040 MHz\n        Memory                            : 6251 MHz\n        Video                             : 1770 MHz\n    Applications Clocks\n        Graphics                          : 2040 MHz\n        Memory                            : 6251 MHz\n    Default Applications Clocks\n        Graphics                          : 2040 MHz\n        Memory                            : 6251 MHz\n    Deferred Clocks\n        Memory                            : N/A\n    Max Clocks\n        Graphics                          : 2040 MHz\n        SM                                : 2040 MHz\n        Memory                            : 6251 MHz\n        Video                             : 1770 MHz\n    Max Customer Boost Clocks\n        Graphics                          : 2040 MHz\n    Clock Policy\n        Auto Boost                        : N/A\n        Auto Boost Default                : N/A\n    Fabric\n        State                             : N/A\n        Status                            : N/A\n        CliqueId                          : N/A\n        ClusterUUID                       : N/A\n        Health\n            Summary                       : N/A\n            Bandwidth                     : N/A\n            Route Recovery in progress    : N/A\n            Route Unhealthy               : N/A\n            Access Timeout Recovery       : N/A\n            Incorrect Configuration       : N/A\n    Processes\n        GPU instance ID                   : N/A\n        Compute instance ID               : N/A\n        Process ID                        : 1\n            Type                          : C\n            Name                          : /bin/dumb-init\n            Used GPU Memory               : 186 MiB\n    Capabilities\n        EGM                               : disabled\n\n"
+    },
+    "nccl": [
+      2,
+      27,
+      3
+    ],
+    "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+    "python": "3.11.12 (main, May 21 2025, 23:34:13) [GCC 12.2.0]",
+    "runtime_identity": {
+      "CUDA_VISIBLE_DEVICES": null,
+      "DATABRICKS_RUNTIME_VERSION": null,
+      "NVIDIA_VISIBLE_DEVICES": "GPU-be0fc318-cb08-b134-9337-b3f9aaca18ac,GPU-b7a60119-2b7d-9f0f-03ae-36aeffcd8c57"
+    },
+    "source_digest": "f4cbefdc7399f2900009ea100531572540680680f28451119dd4c584f84d8b06",
+    "timestamp": "2026-09-06T06:06:22.897363+00:00",
+    "topology": {
+      "command": [
+        "nvidia-smi",
+        "topo",
+        "-m"
+      ],
+      "returncode": 255,
+      "stderr": "",
+      "stdout": "\t\u001b[4mGPU0\tGPU1\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nFailed to run topology matrix\n\n"
+    },
+    "torch_cuda": "12.8",
+    "versions": {
+      "huggingface-hub": "0.36.2",
+      "mlflow": null,
+      "safetensors": "0.7.0",
+      "torch": "2.8.0",
+      "transformers": "4.57.6",
+      "triton": "3.4.0"
+    }
+  },
+  "results": [
+    {
+      "graphs": false,
+      "health": {
+        "error": null,
+        "last_iteration": {
+          "graph_replays": 0,
+          "ranks": [
+            {
+              "allocated_bytes": 7511652352,
+              "graph_replays": 0,
+              "peak_bytes": 7525154304,
+              "rank": 0,
+              "reserved_bytes": 7681867776
+            }
+          ],
+          "samples": {
+            "cancel": 21927
+          },
+          "state": {
+            "blocks_by_request": {
+              "cancel": 12
+            },
+            "free": 2036,
+            "iteration": 39,
+            "live": [
+              "cancel"
+            ]
+          }
+        },
+        "rank_startup": [
+          {
+            "allocated_bytes": 7502520320,
+            "device": "NVIDIA L4",
+            "graph_capture_seconds": 0,
+            "graph_captures": 0,
+            "kv_bytes": 1212678144,
+            "rank": 0,
+            "reserved_bytes": 7654604800,
+            "weights_bytes": 6171877376
+          }
+        ],
+        "ready": true,
+        "running": 0,
+        "waiting": 0
+      },
+      "records": [
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.424901,
+            "submitted": 1788674661.801788,
+            "tokens": [
+              1788674665.0714843,
+              1788674665.1495543,
+              1788674665.195255,
+              1788674665.240719,
+              1788674665.2876706,
+              1788674665.3331804,
+              1788674665.3799462,
+              1788674665.4248927
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725358,
+            "submitted": 1788674661.8028188,
+            "tokens": [
+              1788674665.1495597,
+              1788674665.1952577,
+              1788674665.2407224,
+              1788674665.2876742,
+              1788674665.333183,
+              1788674665.3799493,
+              1788674665.4249036,
+              1788674665.4725304
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725394,
+            "submitted": 1788674661.8034105,
+            "tokens": [
+              1788674665.1495633,
+              1788674665.195259,
+              1788674665.2407243,
+              1788674665.287676,
+              1788674665.3331852,
+              1788674665.379951,
+              1788674665.4249067,
+              1788674665.472538
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725418,
+            "submitted": 1788674661.804096,
+            "tokens": [
+              1788674665.1495664,
+              1788674665.1952608,
+              1788674665.240727,
+              1788674665.2876782,
+              1788674665.3331869,
+              1788674665.3799531,
+              1788674665.424909,
+              1788674665.4725404
+            ]
+          }
+        },
+        {
+          "input_tokens": 15,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-5",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725442,
+            "submitted": 1788674661.8050933,
+            "tokens": [
+              1788674665.1495695,
+              1788674665.195262,
+              1788674665.240729,
+              1788674665.28768,
+              1788674665.3331883,
+              1788674665.3799553,
+              1788674665.4249115,
+              1788674665.472543
+            ]
+          }
+        },
+        {
+          "input_tokens": 18,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-6",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725463,
+            "submitted": 1788674661.8058505,
+            "tokens": [
+              1788674665.1495764,
+              1788674665.1952631,
+              1788674665.2407308,
+              1788674665.2876813,
+              1788674665.33319,
+              1788674665.3799567,
+              1788674665.424914,
+              1788674665.4725454
+            ]
+          }
+        },
+        {
+          "input_tokens": 21,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-7",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725482,
+            "submitted": 1788674661.8065767,
+            "tokens": [
+              1788674665.1495793,
+              1788674665.1952643,
+              1788674665.240733,
+              1788674665.2876835,
+              1788674665.3331914,
+              1788674665.3799586,
+              1788674665.4249163,
+              1788674665.4725473
+            ]
+          }
+        },
+        {
+          "input_tokens": 24,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-8",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.4725516,
+            "submitted": 1788674661.8073068,
+            "tokens": [
+              1788674665.149582,
+              1788674665.1952655,
+              1788674665.2407348,
+              1788674665.2876854,
+              1788674665.333193,
+              1788674665.3799598,
+              1788674665.424918,
+              1788674665.4725497
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.844243,
+            "submitted": 1788674665.4757516,
+            "tokens": [
+              1788674665.5240743,
+              1788674665.56951,
+              1788674665.614227,
+              1788674665.6611967,
+              1788674665.7062829,
+              1788674665.7523916,
+              1788674665.7981052,
+              1788674665.8442395
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.8442457,
+            "submitted": 1788674665.476258,
+            "tokens": [
+              1788674665.524077,
+              1788674665.5695128,
+              1788674665.61423,
+              1788674665.6611996,
+              1788674665.7062855,
+              1788674665.7523937,
+              1788674665.7981093,
+              1788674665.8442445
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.8442478,
+            "submitted": 1788674665.4766529,
+            "tokens": [
+              1788674665.5240788,
+              1788674665.569514,
+              1788674665.6142313,
+              1788674665.6612015,
+              1788674665.7062871,
+              1788674665.7523952,
+              1788674665.7981112,
+              1788674665.844247
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674665.8442495,
+            "submitted": 1788674665.4770916,
+            "tokens": [
+              1788674665.5240803,
+              1788674665.5695155,
+              1788674665.6142333,
+              1788674665.661203,
+              1788674665.7062888,
+              1788674665.7523963,
+              1788674665.7981133,
+              1788674665.8442488
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674666.2066839,
+            "submitted": 1788674665.846939,
+            "tokens": [
+              1788674665.8944874,
+              1788674665.9392707,
+              1788674665.9852686,
+              1788674666.030401,
+              1788674666.0745316,
+              1788674666.1177223,
+              1788674666.161327,
+              1788674666.20668
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674666.2066867,
+            "submitted": 1788674665.8473315,
+            "tokens": [
+              1788674665.8944898,
+              1788674665.939274,
+              1788674665.9852717,
+              1788674666.0304043,
+              1788674666.074534,
+              1788674666.1177342,
+              1788674666.1613302,
+              1788674666.2066855
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b1-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674666.555581,
+            "submitted": 1788674666.2084188,
+            "tokens": [
+              1788674666.2559354,
+              1788674666.3001769,
+              1788674666.342926,
+              1788674666.3864222,
+              1788674666.4289696,
+              1788674666.4709458,
+              1788674666.513431,
+              1788674666.5555778
+            ]
+          }
+        }
+      ],
+      "world_size": 1
+    },
+    {
+      "graphs": false,
+      "health": {
+        "error": null,
+        "last_iteration": {
+          "graph_replays": 0,
+          "ranks": [
+            {
+              "allocated_bytes": 4075919360,
+              "graph_replays": 0,
+              "peak_bytes": 4088049152,
+              "rank": 0,
+              "reserved_bytes": 4104126464
+            },
+            {
+              "allocated_bytes": 4075919360,
+              "graph_replays": 0,
+              "peak_bytes": 4088049152,
+              "rank": 1,
+              "reserved_bytes": 4104126464
+            }
+          ],
+          "samples": {
+            "cancel": 21927
+          },
+          "state": {
+            "blocks_by_request": {
+              "cancel": 12
+            },
+            "free": 2036,
+            "iteration": 39,
+            "live": [
+              "cancel"
+            ]
+          }
+        },
+        "rank_startup": [
+          {
+            "allocated_bytes": 4066787328,
+            "device": "NVIDIA L4",
+            "graph_capture_seconds": 0,
+            "graph_captures": 0,
+            "kv_bytes": 606339072,
+            "rank": 0,
+            "reserved_bytes": 4076863488,
+            "weights_bytes": 3397253120
+          },
+          {
+            "allocated_bytes": 4066787328,
+            "device": "NVIDIA L4",
+            "graph_capture_seconds": 0,
+            "graph_captures": 0,
+            "kv_bytes": 606339072,
+            "rank": 1,
+            "reserved_bytes": 4076863488,
+            "weights_bytes": 3397253120
+          }
+        ],
+        "ready": true,
+        "running": 0,
+        "waiting": 0
+      },
+      "records": [
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.0954344,
+            "submitted": 1788674691.1588562,
+            "tokens": [
+              1788674692.6989963,
+              1788674692.7658236,
+              1788674692.8219714,
+              1788674692.8787801,
+              1788674692.9312172,
+              1788674692.986825,
+              1788674693.0406384,
+              1788674693.0954301
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509771,
+            "submitted": 1788674691.1599715,
+            "tokens": [
+              1788674692.7658277,
+              1788674692.8219755,
+              1788674692.8787835,
+              1788674692.9312212,
+              1788674692.9868295,
+              1788674693.0406427,
+              1788674693.0954359,
+              1788674693.1509728
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509793,
+            "submitted": 1788674691.1605744,
+            "tokens": [
+              1788674692.7658298,
+              1788674692.8219776,
+              1788674692.8787916,
+              1788674692.9312236,
+              1788674692.9868314,
+              1788674693.0406446,
+              1788674693.0954378,
+              1788674693.1509783
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.150982,
+            "submitted": 1788674691.161314,
+            "tokens": [
+              1788674692.7658322,
+              1788674692.8219802,
+              1788674692.878793,
+              1788674692.9312253,
+              1788674692.9868336,
+              1788674693.0406475,
+              1788674693.0954401,
+              1788674693.1509807
+            ]
+          }
+        },
+        {
+          "input_tokens": 15,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-5",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509836,
+            "submitted": 1788674691.1618886,
+            "tokens": [
+              1788674692.765834,
+              1788674692.8219821,
+              1788674692.8787944,
+              1788674692.9312272,
+              1788674692.9868357,
+              1788674693.0406494,
+              1788674693.0954418,
+              1788674693.1509826
+            ]
+          }
+        },
+        {
+          "input_tokens": 18,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-6",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509862,
+            "submitted": 1788674691.162388,
+            "tokens": [
+              1788674692.765836,
+              1788674692.821984,
+              1788674692.8787966,
+              1788674692.9312296,
+              1788674692.9868371,
+              1788674693.040652,
+              1788674693.0954444,
+              1788674693.1509848
+            ]
+          }
+        },
+        {
+          "input_tokens": 21,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-7",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509883,
+            "submitted": 1788674691.162918,
+            "tokens": [
+              1788674692.7658377,
+              1788674692.821986,
+              1788674692.878798,
+              1788674692.931232,
+              1788674692.9868388,
+              1788674693.0406537,
+              1788674693.0954466,
+              1788674693.1509871
+            ]
+          }
+        },
+        {
+          "input_tokens": 24,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-8",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.1509912,
+            "submitted": 1788674691.1639602,
+            "tokens": [
+              1788674692.7658393,
+              1788674692.821988,
+              1788674692.8788104,
+              1788674692.9312346,
+              1788674692.9868402,
+              1788674693.0406559,
+              1788674693.0954483,
+              1788674693.1509895
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.5879617,
+            "submitted": 1788674693.1543467,
+            "tokens": [
+              1788674693.2109468,
+              1788674693.2654374,
+              1788674693.3196766,
+              1788674693.373322,
+              1788674693.4264393,
+              1788674693.481694,
+              1788674693.5350776,
+              1788674693.587957
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.5879645,
+            "submitted": 1788674693.1548312,
+            "tokens": [
+              1788674693.2109501,
+              1788674693.265441,
+              1788674693.3196795,
+              1788674693.3733246,
+              1788674693.4264429,
+              1788674693.481697,
+              1788674693.535081,
+              1788674693.5879629
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.5879674,
+            "submitted": 1788674693.1553688,
+            "tokens": [
+              1788674693.2109516,
+              1788674693.2654424,
+              1788674693.3196812,
+              1788674693.3733263,
+              1788674693.4264452,
+              1788674693.4816992,
+              1788674693.5350833,
+              1788674693.5879657
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674693.5879695,
+            "submitted": 1788674693.1558795,
+            "tokens": [
+              1788674693.2109537,
+              1788674693.2654443,
+              1788674693.3196828,
+              1788674693.3733284,
+              1788674693.4264472,
+              1788674693.4817011,
+              1788674693.5350864,
+              1788674693.5879683
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674694.0305765,
+            "submitted": 1788674693.5904455,
+            "tokens": [
+              1788674693.648347,
+              1788674693.7023246,
+              1788674693.7574325,
+              1788674693.8107295,
+              1788674693.8660488,
+              1788674693.9206913,
+              1788674693.9759343,
+              1788674694.0305722
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674694.0305796,
+            "submitted": 1788674693.5909858,
+            "tokens": [
+              1788674693.6483505,
+              1788674693.7023294,
+              1788674693.757435,
+              1788674693.8107333,
+              1788674693.8660529,
+              1788674693.9206953,
+              1788674693.9759371,
+              1788674694.030578
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b1-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674694.4694912,
+            "submitted": 1788674694.0328743,
+            "tokens": [
+              1788674694.0900424,
+              1788674694.1465306,
+              1788674694.204606,
+              1788674694.2552106,
+              1788674694.310674,
+              1788674694.3611064,
+              1788674694.4145017,
+              1788674694.4694872
+            ]
+          }
+        }
+      ],
+      "world_size": 2
+    },
+    {
+      "graphs": true,
+      "health": {
+        "error": null,
+        "last_iteration": {
+          "graph_replays": 29,
+          "ranks": [
+            {
+              "allocated_bytes": 4127051264,
+              "graph_replays": 29,
+              "peak_bytes": 4138609664,
+              "rank": 0,
+              "reserved_bytes": 4282384384
+            },
+            {
+              "allocated_bytes": 4127051264,
+              "graph_replays": 29,
+              "peak_bytes": 4138609664,
+              "rank": 1,
+              "reserved_bytes": 4282384384
+            }
+          ],
+          "samples": {
+            "cancel": 21927
+          },
+          "state": {
+            "blocks_by_request": {
+              "cancel": 12
+            },
+            "free": 2036,
+            "iteration": 39,
+            "live": [
+              "cancel"
+            ]
+          }
+        },
+        "rank_startup": [
+          {
+            "allocated_bytes": 4118526976,
+            "device": "NVIDIA L4",
+            "graph_capture_seconds": 2.9898841250000032,
+            "graph_captures": 4,
+            "kv_bytes": 606339072,
+            "rank": 0,
+            "reserved_bytes": 4255121408,
+            "weights_bytes": 3397253120
+          },
+          {
+            "allocated_bytes": 4118526976,
+            "device": "NVIDIA L4",
+            "graph_capture_seconds": 2.9709943190000274,
+            "graph_captures": 4,
+            "kv_bytes": 606339072,
+            "rank": 1,
+            "reserved_bytes": 4255121408,
+            "weights_bytes": 3397253120
+          }
+        ],
+        "ready": true,
+        "running": 0,
+        "waiting": 0
+      },
+      "records": [
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.936486,
+            "submitted": 1788674721.6737065,
+            "tokens": [
+              1788674721.7348433,
+              1788674721.7944472,
+              1788674721.8207016,
+              1788674721.8440804,
+              1788674721.8672898,
+              1788674721.8902667,
+              1788674721.9134097,
+              1788674721.9364831
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.9600105,
+            "submitted": 1788674721.6746361,
+            "tokens": [
+              1788674721.7944505,
+              1788674721.8207045,
+              1788674721.8440828,
+              1788674721.8672926,
+              1788674721.8902695,
+              1788674721.913412,
+              1788674721.936487,
+              1788674721.960008
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.9600124,
+            "submitted": 1788674721.6752012,
+            "tokens": [
+              1788674721.7944524,
+              1788674721.8207064,
+              1788674721.8440843,
+              1788674721.8672943,
+              1788674721.8902707,
+              1788674721.9134133,
+              1788674721.9364882,
+              1788674721.9600115
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.9600143,
+            "submitted": 1788674721.675776,
+            "tokens": [
+              1788674721.7944546,
+              1788674721.8207078,
+              1788674721.8440862,
+              1788674721.8672955,
+              1788674721.8902729,
+              1788674721.913415,
+              1788674721.93649,
+              1788674721.9600136
+            ]
+          }
+        },
+        {
+          "input_tokens": 15,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-5",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.960016,
+            "submitted": 1788674721.6764176,
+            "tokens": [
+              1788674721.7944562,
+              1788674721.8207092,
+              1788674721.8440876,
+              1788674721.867297,
+              1788674721.890274,
+              1788674721.9134161,
+              1788674721.9364913,
+              1788674721.960015
+            ]
+          }
+        },
+        {
+          "input_tokens": 18,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-6",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.9600177,
+            "submitted": 1788674721.6767817,
+            "tokens": [
+              1788674721.7944586,
+              1788674721.8207107,
+              1788674721.8440888,
+              1788674721.8672984,
+              1788674721.8902752,
+              1788674721.9134178,
+              1788674721.9364927,
+              1788674721.960017
+            ]
+          }
+        },
+        {
+          "input_tokens": 21,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-7",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.960019,
+            "submitted": 1788674721.6772592,
+            "tokens": [
+              1788674721.7944608,
+              1788674721.8207126,
+              1788674721.8440907,
+              1788674721.8672996,
+              1788674721.8902767,
+              1788674721.913419,
+              1788674721.9364944,
+              1788674721.9600184
+            ]
+          }
+        },
+        {
+          "input_tokens": 24,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "mixed-8",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674721.960021,
+            "submitted": 1788674721.6780477,
+            "tokens": [
+              1788674721.7944627,
+              1788674721.820714,
+              1788674721.8440921,
+              1788674721.8673007,
+              1788674721.8902779,
+              1788674721.9134212,
+              1788674721.9364953,
+              1788674721.9600203
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.18423,
+            "submitted": 1788674721.9636226,
+            "tokens": [
+              1788674722.0215476,
+              1788674722.0467663,
+              1788674722.0694828,
+              1788674722.0925605,
+              1788674722.1153562,
+              1788674722.1381721,
+              1788674722.1612558,
+              1788674722.1842268
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.1842318,
+            "submitted": 1788674721.9641361,
+            "tokens": [
+              1788674722.0215495,
+              1788674722.0467694,
+              1788674722.0694847,
+              1788674722.092563,
+              1788674722.115358,
+              1788674722.1381745,
+              1788674722.1612585,
+              1788674722.1842308
+            ]
+          }
+        },
+        {
+          "input_tokens": 9,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-3",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.184234,
+            "submitted": 1788674721.9654074,
+            "tokens": [
+              1788674722.021551,
+              1788674722.0467713,
+              1788674722.0694861,
+              1788674722.0925639,
+              1788674722.1153598,
+              1788674722.138176,
+              1788674722.1612601,
+              1788674722.184233
+            ]
+          }
+        },
+        {
+          "input_tokens": 12,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b4-mixed-4",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.1842365,
+            "submitted": 1788674721.965989,
+            "tokens": [
+              1788674722.0215518,
+              1788674722.0467727,
+              1788674722.069487,
+              1788674722.0925648,
+              1788674722.115361,
+              1788674722.1381774,
+              1788674722.1612613,
+              1788674722.1842353
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.4025083,
+            "submitted": 1788674722.18645,
+            "tokens": [
+              1788674722.2432559,
+              1788674722.2686677,
+              1788674722.2910042,
+              1788674722.3132641,
+              1788674722.3356373,
+              1788674722.3579848,
+              1788674722.3802986,
+              1788674722.4025054
+            ]
+          }
+        },
+        {
+          "input_tokens": 6,
+          "output_token_ids": [
+            16,
+            17,
+            18,
+            16,
+            17,
+            18,
+            16,
+            17
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b2-mixed-2",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.402511,
+            "submitted": 1788674722.186947,
+            "tokens": [
+              1788674722.2432592,
+              1788674722.2686706,
+              1788674722.2910068,
+              1788674722.3132668,
+              1788674722.3356442,
+              1788674722.3579872,
+              1788674722.380301,
+              1788674722.4025095
+            ]
+          }
+        },
+        {
+          "input_tokens": 3,
+          "output_token_ids": [
+            13,
+            220,
+            113280,
+            5122,
+            99460,
+            100466,
+            9370,
+            100920
+          ],
+          "output_tokens": 8,
+          "reason": "length",
+          "request_id": "b1-mixed-1",
+          "terminal_status": "completed",
+          "timing": {
+            "finished": 1788674722.608924,
+            "submitted": 1788674722.4043353,
+            "tokens": [
+              1788674722.4607077,
+              1788674722.4838536,
+              1788674722.5046163,
+              1788674722.5258286,
+              1788674722.5464976,
+              1788674722.566982,
+              1788674722.5877054,
+              1788674722.6089208
+            ]
+          }
+        }
+      ],
+      "world_size": 2
+    }
+  ],
+  "status": "passed"
+}

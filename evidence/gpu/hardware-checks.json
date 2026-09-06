@@ -1,0 +1,8 @@
+{
+  "gpus": [
+    "NVIDIA L4, GPU-be0fc318-cb08-b134-9337-b3f9aaca18ac, 23034 MiB",
+    "NVIDIA L4, GPU-b7a60119-2b7d-9f0f-03ae-36aeffcd8c57, 23034 MiB"
+  ],
+  "provider": "Modal",
+  "requested": "L4:2"
+}

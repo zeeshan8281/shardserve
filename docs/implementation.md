@@ -1,12 +1,12 @@
 # Implementation and evidence plan
 
-The PRD remains the release contract. This repository is an implementation under verification, not a completed GPU engine release.
+The PRD remains the release contract. The GPU core has hardware evidence; Databricks and performance acceptance are incomplete.
 
 ## P0 audit
 
 Source inspected: `zeeshan8281/cloud-inference-from-scratch`, exact commit `174715839aa256a2010b21a796da716cae1a46f4`, cloned to `/tmp/shardserve-reference`. The original working service was not touched. Source is MIT; its copyright and permission notice are preserved in `LICENSE`.
 
-Inspected `model.py`, `weights.py`, `attention.py`, `kernel.py`, `cache.py`, scheduler interfaces and allocator/ragged tests. Reused RMSNorm/RoPE/causal attention math in `shardserve/math.py` and the direct paged ragged Triton kernel in `shardserve/kernel.py`. The kernel wrapper now accepts BF16; that extension needs CUDA validation. Scheduler tests and allocation concepts informed new focused tests. The original loader stages a full CPU state dictionary and is single-GPU; the new loader uses safetensors slices before device transfer. No API, UI, deployment, quantization, prefix cache or original service infrastructure was imported.
+Inspected `model.py`, `weights.py`, `attention.py`, `kernel.py`, `cache.py`, scheduler interfaces and allocator/ragged tests. Reused RMSNorm/RoPE/causal attention math in `shardserve/math.py` and the direct paged ragged Triton kernel in `shardserve/kernel.py`. The BF16 extension passed the two-L4 preflight and full-model checks. Scheduler tests and allocation concepts informed new focused tests. The original loader stages a full CPU state dictionary and is single-GPU; the new loader uses safetensors slices before device transfer. No API, UI, deployment, quantization, prefix cache or original service infrastructure was imported.
 
 Selected model: `Qwen/Qwen2.5-3B-Instruct` revision `14d7620ba47cf51be0b176e14e27e38a34d4ff88`. Actual pinned config/tokenizer/generation/index files were downloaded and checksummed. `evidence/checkpoint-metadata.json` records the config and chat-template test. No full weights have been downloaded here. Default Instruct generation settings are stochastic; ShardServe explicitly overrides those with greedy argmax. EOS IDs come from pinned generation config.
 
@@ -23,16 +23,16 @@ Selected model: `Qwen/Qwen2.5-3B-Instruct` revision `14d7620ba47cf51be0b176e14e2
 
 | Phase | Local implementation/checks | Remaining mandatory evidence |
 |---|---|---|
-| P0 | Source/license audit, checkpoint metadata, environment manifest | Full checkpoint files; allocated GPU/Databricks identity |
-| P1 | Custom sharded model, source-axis reassembly, real tiny FP32 TP algebra and HF comparison | Real BF16 TP1/TP2, layer/logit errors, committed numerical envelope, exact greedy corpus |
-| P2 | Paged pool, distributed plan path, mixed/chunked CPU regressions | Real Triton/NCCL concurrent workload, capacity agreement/memory on all ranks |
-| P3 | Boundary cancellation, deadlines, backpressure, bounded supervisor, fault harness | Observed kill/collective shutdown timings and restart reference output |
-| P4 | Bounded graph capture/replay implementation and harness | Actual graph/eager equality, both-rank traces, no stale reads during transitions |
+| P0 | Source/license audit, checkpoint metadata, environment manifest, full checkpoint execution and Modal GPU identity | Databricks identity |
+| P1 | Custom sharded model; FP32 algebra; repeated BF16 TP1/TP2 layer/logit checks; committed envelope; exact seven-prompt greedy corpus | Complete on tested L4 hardware |
+| P2 | Paged pool, distributed plan path, mixed/chunked regressions, real Triton/NCCL concurrent workload and per-rank state/memory | Complete on tested L4 hardware |
+| P3 | Cancellation/deadline/backpressure supervisor plus before/after-all-reduce and external-kill evidence | Complete on tested L4 hardware |
+| P4 | Graph/eager equality, 1/2/4/8 transitions, cancellation, 29 graph replays | Preserve both-rank profiler traces in a performance run |
 | P5 | Versioned Delta preparation, attempt sealing, insert-only single-writer commit, local recovery checks | Actual classic GPU job, durable Delta recovery, platform filesystem and MLflow upload verification |
 | P6 | Deterministic workload and bounded HTTP comparison driver | All five matched comparisons, at least three repeats, raw GPU records, profiler traces, actual cost |
 
-All GPU/platform gates are **UNVERIFIED/BLOCKED** here. There is no committed BF16 envelope: inventing one would bypass P1. The correctness command emits raw calibration records and fails the gate unless an evidence-backed envelope is supplied. CPU parallel checks use real tensor/model operations and synchronized host reductions, not NCCL. Persistence and HTTP stubs test only their control boundaries.
+GPU evidence was collected on 2026-09-06 using two co-located Modal NVIDIA L4 GPUs with 23,034 MiB each. Raw calibration and verified reports, hardware identities, graph results and fault timings are committed under `evidence/gpu`. Model weights lived only on ephemeral Modal storage and were not copied into this repository. Databricks and P6 remain blocked on workspace access and a separate bounded performance allocation.
 
 ## Known verification gaps
 
-GPU harnesses have not been executed. Full-model reference checks currently include a small corpus and must be expanded/committed with measured BF16 stability before performance conclusions. HF/eager cached/direct-kernel comparisons report fixed-prefix errors; near ties do not waive greedy differences. GPU hardware differences, memory admission peaks, graph/NCCL compatibility, and Databricks FUSE/fsync semantics must be validated in preflight. There is no native managed serving deployment or managed TP-server support claim.
+The seven-prompt full-model corpus passed exact greedy equality on the tested L4s; its numerical envelope is hardware-specific. Both-rank profiler traces, the full matched benchmark matrix, actual billed cost, live vLLM adapter behavior, Databricks Delta recovery, platform filesystem semantics and MLflow upload remain unverified. There is no native managed serving deployment or managed TP-server support claim.

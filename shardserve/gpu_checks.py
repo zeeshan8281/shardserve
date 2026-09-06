@@ -17,7 +17,7 @@ def consume(engine,row):
 
 
 def compare(root,output):
-    rows=[dict(request_id=f'mixed-{n}',token_ids=[9707,11,1879]*n,max_new_tokens=8) for n in range(1,9)]
+    rows=[dict(request_id=f'mixed-{n}',token_ids=[16,17,18]*n,max_new_tokens=8) for n in range(1,9)]
     results=[]
     for world,graphs in ((1,False),(2,False),(2,True)):
         engine=Engine(root,Config(world_size=world,graphs=graphs))
