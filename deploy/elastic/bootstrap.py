@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Publish a small Git corpus as an immutable Elasticsearch index."""
 import argparse
+from dataclasses import replace
 import hashlib
 import json
 import os
@@ -53,7 +54,8 @@ def chunks(root, files, repository, revision, source_url_base, lines_per_chunk=1
             if end==len(rows): break
 
 
-def publish(client, index, alias, documents, inference_id=None, batch_size=100):
+def publish(client, index, alias, documents, inference_id=None, batch_size=8):
+    if type(batch_size) is not int or not 1<=batch_size<=100: raise ValueError('batch size must be 1..100')
     properties={
         'doc_id':{'type':'keyword'},'content':{'type':'text'},'content_sha256':{'type':'keyword'},
         'source_url':{'type':'keyword','index':False},'repository':{'type':'keyword'},
@@ -96,6 +98,7 @@ def main():
     parser.add_argument('--repository',default='shardserve')
     parser.add_argument('--alias',default=os.environ.get('ELASTIC_INDEX','shardserve-docs-live'))
     parser.add_argument('--inference-id',help='pin a semantic_text inference endpoint; omit for BM25-only')
+    parser.add_argument('--batch-size',type=int,default=8)
     parser.add_argument('--source-url-base')
     parser.add_argument('--manifest-output')
     args=parser.parse_args()
@@ -106,8 +109,8 @@ def main():
     parsed=urlparse(base)
     if parsed.scheme!='https' or not parsed.netloc: raise ValueError('source URL base must use HTTPS')
     index=(args.alias.removesuffix('-live')+'-v'+revision[:12]).lower()
-    config=ElasticConfig.from_env(); client=ElasticSearch(config)
-    count=publish(client,index,args.alias,chunks(root,files,args.repository,revision,base),args.inference_id)
+    config=replace(ElasticConfig.from_env(),timeout=60.); client=ElasticSearch(config)
+    count=publish(client,index,args.alias,chunks(root,files,args.repository,revision,base),args.inference_id,args.batch_size)
     result={'index':index,'alias':args.alias,'repository':args.repository,'revision':revision,
         'documents':count,'semantic':bool(args.inference_id),'inference_id':args.inference_id}
     if args.manifest_output:

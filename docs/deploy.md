@@ -31,6 +31,8 @@ python3 -m deploy.elastic.bootstrap \
 
 This creates an immutable index such as `shardserve-docs-v0123456789ab`, checks every bulk response and the final document count, then atomically moves `shardserve-docs-live` to it. It indexes only tracked `.py`, `.md`, `.json`, `.toml`, `.yml`, and `.yaml` files. Individual files are capped at 512 KB and the total source corpus at 20 MB.
 
+Semantic publication uses batches of eight so a Serverless inference endpoint can process them within the bounded request timeout. Use `--batch-size` only when the deployment has measured capacity for a different value.
+
 If the selected Elastic deployment does not provide the pinned semantic endpoint, omit `--inference-id` and deploy with `ELASTIC_SEARCH_MODE=lexical`. Do not configure hybrid mode against a BM25-only index.
 
 After publication, create a separate runtime API key with read access to `shardserve-docs-*`. Replace the shell value with that narrower key before creating the Modal secret.
