@@ -9,9 +9,13 @@ class Engine:
         self.config=config
         self.group=Group(root,config)
         self.tokenizer=AutoTokenizer.from_pretrained(root,local_files_only=True,trust_remote_code=False)
-        # Instruct generation stops on im_end and endoftext, matching generation_config.
         import json
         from pathlib import Path
+        self.vocab_size=json.loads((Path(root)/'config.json').read_text())['vocab_size']
+        if len(self.tokenizer)>self.vocab_size:
+            self.group.close(force=True)
+            raise ValueError('tokenizer exceeds model vocabulary')
+        # Instruct generation stops on im_end and endoftext, matching generation_config.
         generation=json.loads((Path(root)/'generation_config.json').read_text())
         eos=generation['eos_token_id']
         self.scheduler=Scheduler(config,eos if isinstance(eos,list) else [eos])
@@ -21,7 +25,7 @@ class Engine:
         self.worker.start()
 
     def submit(self, row):
-        r=validate_request(row,self.tokenizer,self.config,self.tokenizer.vocab_size)
+        r=validate_request(row,self.tokenizer,self.config,self.vocab_size)
         with self.lock:
             if self.error or self.stopping:
                 raise RuntimeError(self.error or 'engine stopped')

@@ -2,6 +2,7 @@ import copy
 import json
 from pathlib import Path
 import tempfile
+import threading
 import time
 import unittest
 import torch
@@ -11,6 +12,7 @@ from shardserve.weights import shard, specs, load
 from shardserve.model import Model
 from shardserve.cache import Blocks, Cache
 from shardserve.runtime import metadata
+from shardserve.engine import Engine
 from shardserve.scheduler import Scheduler, Request, validate_request
 from shardserve import batch
 
@@ -74,6 +76,17 @@ class Algebra(unittest.TestCase):
         torch.testing.assert_close(actual,expected,atol=1e-5,rtol=1e-4)
 
 class Control(unittest.TestCase):
+    def test_chat_template_added_token_uses_model_vocabulary(self):
+        class Tokenizer:
+            vocab_size=64
+            def apply_chat_template(self,*args,**kwargs): return [1,65]
+        engine=Engine.__new__(Engine)
+        engine.tokenizer=Tokenizer(); engine.vocab_size=66; engine.config=Config()
+        engine.lock=threading.Condition(); engine.error=None; engine.stopping=False
+        engine.scheduler=Scheduler(engine.config,[65])
+        request=engine.submit({'request_id':'special','prompt':'hello','max_new_tokens':1})
+        self.assertEqual(request.prompt,[1,65])
+
     def test_invalid(self):
         for kw in ({'world_size':4},{'max_live':9},{'context':4097},{'token_budget':1},{'kv_blocks':0}):
             with self.assertRaises(ValueError): Config(**kw)
