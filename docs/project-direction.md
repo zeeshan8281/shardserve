@@ -451,7 +451,7 @@ Use the existing Databricks CLI OAuth login for development. A production deploy
 
 Databricks Free Edition is suitable for small Delta, SQL, job, Volume, and MLflow work, but it is serverless-only, permits at most five concurrent job tasks, restricts outbound internet, and does not provide custom GPU serving or GPU batch inference. Keep Modal as the GPU executor and let the relay or Modal talk to Elastic ([Databricks Free Edition limitations](https://docs.databricks.com/aws/en/getting-started/free-edition-limitations)).
 
-Use an Elastic Cloud Hosted trial for the demonstration. It keeps indices, semantic models, Kibana, and telemetry remote. The Cloud trial is time-limited, so the core must continue to work on Basic with BM25, `dense_vector`, client-side RRF, and ordinary search/observability features ([Elastic Cloud trial](https://www.elastic.co/cloud/activate-trial), [Elastic subscriptions](https://www.elastic.co/subscriptions/)).
+Use an Elastic Cloud Serverless Search trial for the demonstration. It keeps indices, semantic models, Kibana, and telemetry remote. The Cloud trial is time-limited, so the core must continue to work on Basic with BM25, `dense_vector`, client-side RRF, and ordinary search/observability features ([Elastic Cloud trial](https://www.elastic.co/cloud/activate-trial), [Elastic subscriptions](https://www.elastic.co/subscriptions/)).
 
 Local storage remains small:
 

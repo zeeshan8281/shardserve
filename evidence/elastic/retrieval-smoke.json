@@ -1,0 +1,13 @@
+{
+  "documents": 389,
+  "elapsed_ms": 1442.8,
+  "index": "shardserve-docs-vc51baa09821a",
+  "mode": "hybrid",
+  "query": "FIFO admission reserves each request full prompt and output KV capacity",
+  "repository": "shardserve",
+  "top_documents": [
+    "docs/project-direction.md:L1-L120",
+    "docs/implementation.md:L1-L38",
+    "shardserve/scheduler.py:L1-L120"
+  ]
+}

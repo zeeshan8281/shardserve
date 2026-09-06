@@ -4,7 +4,7 @@ This is the shortest deployment path for the retrieval-aware API. Model weights 
 
 ## 1. Create the Elastic deployment
 
-Create an Elastic Cloud Hosted deployment or trial and copy its Elasticsearch HTTPS endpoint. In Kibana, create an API key that can create and manage `shardserve-docs-*` indices while publishing the corpus.
+Create an Elastic Cloud Serverless Search project or Hosted deployment and copy its Elasticsearch HTTPS endpoint. In Kibana, create an API key that can create and manage `shardserve-docs-*` indices while publishing the corpus.
 
 Export the values only in the current shell:
 

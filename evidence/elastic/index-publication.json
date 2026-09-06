@@ -1,0 +1,9 @@
+{
+  "alias": "shardserve-docs-live",
+  "documents": 389,
+  "index": "shardserve-docs-vc51baa09821a",
+  "inference_id": ".elser-2-elasticsearch",
+  "repository": "shardserve",
+  "revision": "c51baa09821a62787b23122630e5a8ce4e6461f1",
+  "semantic": true
+}

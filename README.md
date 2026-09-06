@@ -3,13 +3,11 @@
 [![CI](https://github.com/zeeshan8281/shardserve/actions/workflows/ci.yml/badge.svg)](https://github.com/zeeshan8281/shardserve/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Custom tensor-parallel inference for `Qwen/Qwen2.5-3B-Instruct`, with continuous batching, paged KV storage, a private HTTP API, and a durable Databricks batch data plane.
+Custom tensor-parallel inference for `Qwen/Qwen2.5-3B-Instruct`, with continuous batching, paged KV storage, Elastic hybrid retrieval, and a durable Databricks batch data plane.
 
 The hosted path uses Databricks for durable inputs, Delta results, Unity Catalog artifacts, and MLflow tracking. Modal runs the custom inference engine on two NVIDIA L4 GPUs. The relay only handles small temporary JSON shards, so model weights never need to live on the local machine.
 
-The proposed next research milestone is [retrieval-aware tensor-parallel inference with Databricks and Elastic](docs/project-direction.md). It is documented as a proposal until its correctness and performance gates have measured evidence.
-
-The first deployable slice adds an Elastic-backed `/answer` endpoint and a two-L4 Modal web service. See the [deployment runbook](docs/deploy.md).
+The current deployable slice adds an authenticated Elastic-backed `/answer` endpoint and a two-L4 Modal web service. The larger retrieval-aware scheduling experiment remains specified in [the technical direction](docs/project-direction.md). See the [deployment runbook](docs/deploy.md).
 
 ## What works
 
@@ -17,6 +15,7 @@ The first deployable slice adds an Elastic-backed `/answer` endpoint and a two-L
 - Coordinated continuous batching, chunked prefill, paged KV allocation, greedy sampling, cancellation, deadlines, and bounded backpressure.
 - NCCL collectives, a Triton paged-attention kernel, and optional CUDA Graphs.
 - Immutable input/output shards with checksums, bounded retries, insert-only Delta commits, and MLflow artifacts.
+- Immutable Elastic corpus publication with exact counts, an atomic live alias, ELSER semantic fields, and RRF hybrid retrieval.
 - Full-model BF16 correctness, failure handling, and graph checks executed on two Modal L4 GPUs.
 - End-to-end Databricks → Modal → Databricks acceptance with four distinct completed results.
 
@@ -26,10 +25,13 @@ Performance benchmarking is implemented but the full comparison matrix has not b
 
 ```mermaid
 flowchart LR
+    U[CLI or HTTP client] --> E[Elastic hybrid retrieval]
+    E --> M[Modal worker<br/>custom TP2 engine]
+    M --> U
     I[Delta input table] --> D[Databricks control plane]
     D --> V[Unity Catalog Volume]
     V -->|sealed input JSON| R[Temporary relay]
-    R --> M[Modal worker<br/>2 × NVIDIA L4]
+    R --> M
     M -->|sealed result JSON| R
     R --> V
     D --> O[Delta results table]
@@ -39,6 +41,7 @@ flowchart LR
 | Component | Responsibility |
 |---|---|
 | Databricks | Snapshot inputs, persist run state, validate outputs, commit Delta results, record MLflow runs |
+| Elastic | Publish immutable source chunks and retrieve lexical plus semantic evidence through a live alias |
 | Modal | Cache the pinned model remotely and run the two-GPU custom engine |
 | Relay | Move sealed JSON shards between the two services using a temporary local directory |
 
@@ -152,6 +155,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=2 \
 | TP1/TP2 full-model correctness | Passed on two NVIDIA L4 GPUs | [`evidence/gpu`](evidence/gpu) |
 | Graphs and injected rank failures | Passed on two NVIDIA L4 GPUs | [`evidence/gpu/gpu-graphs.json`](evidence/gpu/gpu-graphs.json), [`evidence/gpu/gpu-faults.json`](evidence/gpu/gpu-faults.json) |
 | Databricks/Modal data plane | 4 inputs, 4 distinct completed results | [`evidence/databricks/data-plane-finalize.json`](evidence/databricks/data-plane-finalize.json), [`evidence/databricks/data-plane-sql-verification.json`](evidence/databricks/data-plane-sql-verification.json) |
+| Elastic publication and hybrid retrieval | 389 verified chunks; live RRF query passed | [`evidence/elastic/index-publication.json`](evidence/elastic/index-publication.json), [`evidence/elastic/retrieval-smoke.json`](evidence/elastic/retrieval-smoke.json) |
 | MLflow upload | Passed | [`evidence/databricks/data-plane-tracking.json`](evidence/databricks/data-plane-tracking.json) |
 
 The connected Databricks Free Edition workspace cannot create classic compute, and its serverless A10 request exhausted the available GPU quota. Modal therefore supplies the GPUs while Databricks remains the data plane. See [`docs/implementation.md`](docs/implementation.md) for design decisions, provenance, and remaining acceptance work.
@@ -161,6 +165,7 @@ The connected Databricks Free Edition workspace cannot create classic compute, a
 ```text
 shardserve/          inference engine, scheduler, API, batch protocol
 deploy/databricks/   serverless control-plane notebook, job, relay
+deploy/elastic/      bounded immutable corpus publisher
 deploy/modal/        two-L4 worker
 tests/               CPU and GPU-gated checks
 evidence/            compact hardware and acceptance records
